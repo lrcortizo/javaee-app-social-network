@@ -170,20 +170,15 @@ That's all. You can now continue developing your changes in your solution branch
 You can use any other IDE, such as IntelliJ IDEA or NetBeans, as long as they
 are compatible with Maven projects.
 
-Before continue, you have **to patch Eclipse Mars**, concretely the m2e-wtp
-plugin. Go to `Help -> Install New Software`. Work with repository located
-at `http://download.eclipse.org/m2e-wtp/snapshots/mars/` and then select and
-install "Maven Integration for WTP". Restart Eclipse.
-
-Open Eclipse Mars JEE and import your Maven project with
+Open Eclipse Neon JEE and import your Maven project with
 `File -> Import -> Maven -> Existing Maven Projects`
 
 Select your source code folder (where the `pom.xml` should be placed)
 
-Eclipse should then import 3 projects (`esi-exercise`, `web` and `domain`)
+Eclipse should then import 3 projects (`service`, `web` and `domain`)
 
 You can run, if you want the project by:
-1. Right click on `esi-exercise` project and `Run As -> Maven install`
+1. Right click on `bob-esi-solutions` project and `Run As -> Maven install`
 2. Right click on `web` project and `Run As -> Maven build...`.
 Put `wildfly:deploy` as Goal.
 
@@ -980,7 +975,7 @@ Create a package `[es.uvigo.esei.dgss.exercises.jsf.controllers]` into your sour
    ```
       IMPORTANT: Make sure that Java import for `@SessionScoped` is from `javax.enterprise.context.SessionScoped`
 
-After building and deploying you project, JSF aplication will be available at URI  `http://localhost:8080/[project_name]` (`web-0.0.1-SNAPSHOT` as project name in `esi-exercises` project).
+After building and deploying you project, JSF aplication will be available at URI  `http://localhost:8080/[project_name]` (`web-0.0.1-SNAPSHOT` as project name in `bob-esi-solutions` project).
 
 ### Task 1
 Build a very simple JSF view to provide a basic `User` search interface.
