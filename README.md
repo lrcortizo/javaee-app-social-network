@@ -5,7 +5,7 @@ inside the DGSS itinerary.
 
 ## Deployment Environment
 
-The environment is based on Maven 3, MySQL 5.5, WildFly 8.2.1 and Eclipse Mars
+The environment is based on Maven 3, MySQL 5.5, WildFly 8.2.1 and Eclipse Neon
 for JEE.
 
 ### Java JDK 8
@@ -28,7 +28,7 @@ repositories inside the [our Gitlab server](http://sing.ei.uvigo.es/dt/gitlab)
 
 2. The student's solution repository. Surf to
 [our Gitlab server](http://sing.ei.uvigo.es/dt/gitlab) and create a user with
-your @esei.ei.uvigo.es email account. If your username is `bob`, create
+your @esei.uvigo.es email account. If your username is `bob`, create
 a **PRIVATE** project `bob-esi-solutions`
 
     Git url: `http://sing.ei.uvigo.es/dt/gitlab/bob/bob-esi-solutions.git`
@@ -121,8 +121,11 @@ With the WildFly server up and running, you have to go inside your source code f
     cd ..
 
 Surf to [http://localhost:8080/web-0.0.1-SNAPSHOT ](http://localhost:8080/web-0.0.1-SNAPSHOT) to see
-your web (you have to create a index.html, or a Servlet inside the web
-subproject in order to see something)
+your web. You have to create a index.html, or a Servlet inside the web
+subproject in order to see something.
+
+    mkdir -p web/src/main/webapp
+    echo "hello world" > web/src/main/webapp/index.html
 
 ### Commit your changes    
     git add .
