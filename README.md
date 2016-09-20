@@ -94,17 +94,17 @@ Check if WildFly is running by browsing to [http://localhost:8080](http://localh
 
 ## Developing Environment
 ### Clone the remote repository  
-    git clone http://sing.ei.uvigo.es/dt/gitlab/dgss/esi-exercises.git
-    cd esi-exercises
-
-### Prepare for pushing into your own repository
-**WARNING: be careful to replace "bob" with your username**
-
-    git remote set-url origin http://sing.ei.uvigo.es/dt/gitlab/bob/bob-esi-solutions.git
+    **WARNING: be careful to replace "bob" with your username**
+    git clone http://sing.ei.uvigo.es/dt/gitlab/bob/bob-esi-solutions.git
+    cd bob-esi-solutions
 
 ### Add the original repository (esi-exercises) as a remote in order to retrieve updates
 
     git remote add exercises http://sing.ei.uvigo.es/dt/gitlab/dgss/esi-exercises.git
+
+### Retrieve the exercises project master branch to your local master branch
+
+    git pull exercises master
 
 ### Start coding your solution
 Create a branch for your solution:
@@ -114,7 +114,6 @@ Create a branch for your solution:
 ### Building and running the project (every time you make changes in your code)
 With the WildFly server up and running, you have to go inside your source code folder
 
-    cd /path/to/bob-esi-solutions
     mvn install
     cd web
     mvn wildfly:deploy
