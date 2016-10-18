@@ -485,10 +485,6 @@ Create the file `/src/main/webapp/WEB-INF/web.xml` in order to enable REST.
 	version="3.1">
 	<servlet-mapping>
 		<servlet-name>javax.ws.rs.core.Application</servlet-name>
-		<url-pattern>/private/api/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>javax.ws.rs.core.Application</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 </web-app>
