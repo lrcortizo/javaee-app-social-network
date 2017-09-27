@@ -20,18 +20,18 @@ be available)
 First, install git in your system if it was not installed (the `git` command
 must be available). We will work with Git to get updates of these exercises,
 as well as to deliver the student solution. Concretely, we will work with 2 Git
-repositories inside the [our Gitlab server](http://sing.ei.uvigo.es/dt/gitlab)
+repositories inside the [our Gitlab server](http://sing-group.org/dt/gitlab)
 
 1. The main repository (read-only for students)
 
-    Git url: `http://sing.ei.uvigo.es/dt/gitlab/dgss/esi-exercises.git`
+    Git url: `http://sing-group.org/dt/gitlab/dgss/esi-exercises.git`
 
 2. The student's solution repository. Surf to
-[our Gitlab server](http://sing.ei.uvigo.es/dt/gitlab) and create a user with
+[our Gitlab server](http://sing-group.org/dt/gitlab) and create a user with
 your @esei.uvigo.es email account. If your username is `bob`, create
 a **PRIVATE** project `bob-esi-solutions`
 
-    Git url: `http://sing.ei.uvigo.es/dt/gitlab/bob/bob-esi-solutions.git`
+    Git url: `http://sing-group.org/dt/gitlab/bob/bob-esi-solutions.git`
 
 ### MySQL
 Download and install MySQL 5.5 locally.
@@ -95,12 +95,12 @@ Check if WildFly is running by browsing to [http://localhost:8080](http://localh
 ## Developing Environment
 ### Clone the remote repository  
     **WARNING: be careful to replace "bob" with your username**
-    git clone http://sing.ei.uvigo.es/dt/gitlab/bob/bob-esi-solutions.git
+    git clone http://sing-group.org/dt/gitlab/bob/bob-esi-solutions.git
     cd bob-esi-solutions
 
 ### Add the original repository (esi-exercises) as a remote in order to retrieve updates
 
-    git remote add exercises http://sing.ei.uvigo.es/dt/gitlab/dgss/esi-exercises.git
+    git remote add exercises http://sing-group.org/dt/gitlab/dgss/esi-exercises.git
 
 ### Retrieve the exercises project master branch to your local master branch
 
