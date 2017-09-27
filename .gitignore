@@ -3,5 +3,8 @@
 .project
 .classpath
 
+#IntelliJ Idea
+.idea
+
 #Maven
 target
