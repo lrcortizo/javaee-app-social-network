@@ -289,7 +289,8 @@ public class SimpleServlet extends HttpServlet {
 	private UserTransaction transaction;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 
 		PrintWriter writer = resp.getWriter();
 
@@ -297,24 +298,43 @@ public class SimpleServlet extends HttpServlet {
 		writer.println("<body>");
 		writer.println("<h1>Facade tests</h1>");
 
+		writer.println("<form method='POST'>"
+				+ "<button type='submit' name='task' value='1'>Task 1. Create User"
+				+ "</button></form>");
+
+		writer.println("</body>");
+		writer.println("</html>");
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
+		PrintWriter writer = resp.getWriter();
+		writer.println("<html><body>");
+		if (req.getParameter("task").equals("1")) {
+			task1(req, resp, writer);
+		}
+		writer.println("</body></html>");
+	}
+
+	private void task1(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) 
+			throws IOException {
 		// work with Facade
 
 		try {
 			transaction.begin();
 
-			User u = facade.addUser(UUID.randomUUID().toString(), "name", "password", new byte[]{});
-			writer.println("User "+u.getLogin()+" created successfully");
+			// Task 2.1
+			User u = facade.addUser(UUID.randomUUID().toString(), "name", "password", new byte[] {});
+			writer.println("User " + u.getLogin() + " created successfully");
+			
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 			transaction.commit();
 
-		} catch (
-    NotSupportedException |
-    SystemException |
-    SecurityException |
-    IllegalStateException |
-    RollbackException |
-    HeuristicMixedException |
-    HeuristicRollbackException e) {
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
 			try {
 				transaction.rollback();
 			} catch (IllegalStateException e1) {
@@ -328,9 +348,6 @@ public class SimpleServlet extends HttpServlet {
 				e1.printStackTrace();
 			}
 		}
-
-		writer.println("</body>");
-		writer.println("</html>");
 
 	}
 }
