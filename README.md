@@ -515,9 +515,9 @@ these requests using the login module configured in wildfly previously.
 
 For example, if we have these resources:
 - `/api/user` (registration and get user details)
-- `/api/user/post` (logged user's and his friend's posts)
-- `/api/user/post/<id>/like` (logged user's (or his friend's) posts likes)
-- `/api/user/friend` (logged user's friends)
+- `/api/user/<username>/post` (logged user's and his friend's posts)
+- `/api/user/<username>/post/<id>/like` (logged user's (or his friend's) posts likes)
+- `/api/user/<username>/friend` (logged user's friends)
 - ...
 
 We could do the following security scheme:
