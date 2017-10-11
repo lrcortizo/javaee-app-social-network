@@ -591,7 +591,6 @@ Follow these rules:
 
 - Use the package `es.uvigo.esei.dgss.exercises.rest` in the **Web project**.
 - Use the EJBs (`UserEJB` and `PostEJB`) previously implemented.
-- Implement a different class for each resource.
 - Implement security business logic in the EJBs, not in the REST. Try to Keep
 the REST API as simple as possible. Remember that the main responsibility of the
 REST API is to capture HTTP requests, delegate immediately in the business layer
@@ -610,7 +609,7 @@ curl -i  -u dgpena:dgpena http://localhost:8080/web-0.0.1-SNAPSHOT/api/user
 
 # do a PUT request (with authentication and without data)
 curl -X PUT -i -u pepe:pepe http://localhost:8080/web-0.0.1-SNAPSHOT/api/user/friend/incoming/dgpena
-```
+
 
 
 ## Exercise 4: AngularJS (Optional)
