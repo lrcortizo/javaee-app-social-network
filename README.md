@@ -609,7 +609,7 @@ curl -i  -u dgpena:dgpena http://localhost:8080/web-0.0.1-SNAPSHOT/api/user
 
 # do a PUT request (with authentication and without data)
 curl -X PUT -i -u pepe:pepe http://localhost:8080/web-0.0.1-SNAPSHOT/api/user/friend/incoming/dgpena
-
+```
 
 
 ## Exercise 4: AngularJS (Optional)
