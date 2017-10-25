@@ -658,7 +658,7 @@ Place your files inside your **Web project** in `src/main/webapp/angular`.
 The app will be a 'single-page' app, but by using [ngRoute](https://docs.angularjs.org/api/ngRoute)
 in order to simulate a 'multi-page', back button compatible site.
 
-We will start with the `main.html` file, called `index.html`. Here is an example:
+We will start with the root HTML file, called `index.html`. Here is an example:
 
 ```html
 <!DOCTYPE html>
@@ -691,9 +691,9 @@ You can see the scripts section in the `header` section of `index.html`.
 
 - The `scripts/app.js` contain the application initialization and routes (multi-page) 
 definitions.
-- The `controller/*.js` contain your controllers code. Controllers gives data and
+- The `scripts/controller/*.js` contain your controllers code. Controllers gives data and
 react to events to and from the view pages. View pages will be placed in `views` folder
-- The `service/*.js` define services, which are reusable objects you can use 
+- The `scripts/service/*.js` define services, which are reusable objects you can use 
 across your controllers or other services.
 
 Lets start with `scripts/app.js`
@@ -799,8 +799,8 @@ Here you can see the iteration via the `ng-repeat` attribute, which will repeat
 the `div` element per each user. Inside the element, we display the user login,
 by using the special `{{ expression }}` angular expression delimiters.
 
-Finally, lets see another route, the `views/anotherpage.html` with its controller
-`scripts/controller/anotherpagecontroller.js`.
+Finally, lets see another route, the `views/otherpage.html` with its controller
+`scripts/controller/otherpagecontroller.js`.
 
 ```html
 The $scope.value is: {{value}}<br>
