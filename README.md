@@ -888,15 +888,15 @@ Add JSF Servlet configuration to `[src/main/webapp/WEB-INF/web.xml]`
 
 **NOTE:** In a container using Servlet version 3.0 or above this configuration step is not strictly mandatory (See [JSF 2.2 API Javadoc](https://javaserverfaces.java.net/nonav/docs/2.2/javadocs/index.html)) for more details)
 
-Facelet based JSF views (xhtml files) will be located at the web project root folder, `[/src/main/webapp/]`
+Facelet based JSF views (xhtml files) will be located at the web project root folder,`[/src/main/webapp/]`
 
 #### Create a test JSF view
 
 **[Step 1]** Create a "backing bean" (JSF ManagedBean) to hold data and methods employed in this example.
 
-Create a package `[es.uvigo.esei.dgss.exercises.jsf.controllers]` into your Java source code folder to hold JSF managed beans. 
+Create a package `[es.uvigo.esei.dgss.exercises.jsf.controllers]` into your Java source code folder to hold JSF managed beans.
 
-* __Alternative 1__: create a JSF native `@ManagedBean`
+* __Alternative 1__ (to be deprecated): create a JSF native `@ManagedBean`
    1. Add a `TestController.java` file to `es.uvigo.esei.dgss.exercises.jsf.controllers` with the following class definition.
    ```java
    @ManagedBean(name="testController")
@@ -905,11 +905,11 @@ Create a package `[es.uvigo.esei.dgss.exercises.jsf.controllers]` into your Java
    ...
    }
    ```
-   IMPORTANT: Make sure that Java imports for `@SessionScoped` and `@ManagedBean` are from JSF packages (`import javax.faces.bean.ManagedBean` and `import javax.faces.bean.SessionScoped`)
+   IMPORTANT: Make sure that Java imports for `@SessionScoped` and `@ManagedBean` are using JSF packages (`import javax.faces.bean.ManagedBean` and `import javax.faces.bean.SessionScoped`)
 
 * __Alternative 2__ (recommended): create a CDI Bean with `@Named` annotation
    1. PREVIOUS: Add CDI support to your Java EE application
-     
+
      Create an empty `[src/main/webapp/WEB-INF/beans.xml]` file. 
      Make sure `bean-discovery-mode` option is set to `"all"`.
 
@@ -917,7 +917,7 @@ Create a package `[es.uvigo.esei.dgss.exercises.jsf.controllers]` into your Java
      <?xml version="1.0" encoding="UTF-8"?>
      <beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee            
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                            http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
        bean-discovery-mode="all">
      </beans>
@@ -939,24 +939,24 @@ private Date date;
 private int operand1;
 private int operand2;
 private int result;
-    
+
 public TestController() {
 }
-// Getter and setters
+// add Getter and setters
 
 @PostConstruct
 public void initDate() {
   date = Calendar.getInstance().getTime();
 }
-    
+
 public String doAddition() {
   result = operand1 + operand2;
   return "index";
 }
 ```
-      
+
 **[Step 3]** Create a Facelet file `[src/main/webapp/index.xhtml]` and add the following tags.
-```html
+```xml
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -983,30 +983,27 @@ public String doAddition() {
             <h:commandButton value="Add" action="#{testController.doAddition()}"/>
 
             <ul>
-                <li> Date: 
+                <li> Date:
                     <h:outputText value="#{testController.date}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputText> 
+                    </h:outputText>
                 </li>
             </ul>
-
-        </h:form>   
+        </h:form>
     </h:body>
 </html>
 ```
 
-After building and deploying your project, JSF aplication will be available at URI  `http://localhost:8080/[project_name]` (`web-0.0.1-SNAPSHOT` as project name in `bob-esi-solutions` project).
+After building and deploying your project, this JSF aplication will be available at URI  `http://localhost:8080/[project_name]` (use `web-0.0.1-SNAPSHOT` as project name in `bob-esi-solutions` project).
 
-ADDITIONAL TEST: Add a `Operation` class and a `List<Operation> operations` attribute to `TestController` in order to 
-show a performed operations record.
+ADDITIONAL TEST: Add an `Operation` class and a `List<Operation> operations` attribute to `TestController` in order to show a record of the performed operations.
 
 ### Task 1
 Build a very simple JSF view to provide a basic `User` search interface.
 
 1. Query you service layer using the `String` provided by the user in the search Text Field.
 2. Retrieve and show the list of mathing `Users`.
-3. Once the user selects one of the mathing `Users`, show `User` profile information 
-   and the list of `Posts` writen by that `User`
+3. Once the user selects one of the mathing `Users`, show `User` profile information and the list of `Posts` writen by that `User`
 
 Steps:
 
@@ -1018,16 +1015,16 @@ Steps:
 * Design you `xhtml` JSF view(s) using standard JSF components and simple interaction (no `<f:ajax>` interaction)
 
 ### Task 2
-Try to improve the previous JSF view(s) with  these alternatives:
+Improve the previous JSF view(s):
 
-- Employ Primefaces or Bootfaces components instead of standard ones
+1. Employ Primefaces or Bootfaces components instead of standard ones
 
   **Note:** Add Primefaces or Bootfaces dependences to your web project `pom.xml`
 ```xml
 <dependency>
   <groupId>org.primefaces</groupId>
   <artifactId>primefaces</artifactId>
-  <version>6.0</version>
+  <version>6.1</version>
 </dependency>
 ```
 or
@@ -1035,12 +1032,13 @@ or
 <dependency>
     <groupId>net.bootsfaces</groupId>
     <artifactId>bootsfaces</artifactId>
-    <version>0.9.1</version>
+    <version>1.1.3</version>
 </dependency>
 ```
 
-- Include AJAX interacions to avoid reloading full views: use JSF native AJAX support [`<f:ajax>`] or Primefaces/Bootfaces own AJAX engine
-- Use JSF Templates to unify views and simplify `xhtml` contents
-- Define a composite component to show user's `Posts` and use `<ui:repeat>` to get a personalized view (avoid `<h:dataTable>`)
+2. Use JSF Templates to unify views and simplify `xhtml` contents
+3. Define a composite component to show user's `Posts` and use `<ui:repeat>` to get a personalized view (avoid `<h:dataTable>`)
 
   * See an example at [The Java EE Tutorial, 14.4 The compositecomponentexample Example Application](http://docs.oracle.com/javaee/7/tutorial/jsf-advanced-cc004.htm])
+4. Include AJAX interacions to avoid reloading full views: use JSF native AJAX support [`<f:ajax>`] or Primefaces/Bootfaces own AJAX engine
+
