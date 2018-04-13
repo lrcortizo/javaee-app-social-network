@@ -774,7 +774,7 @@ angular.module('socialnetApp')
 }]);
 ```
 
-The service, uses the `$http` angular object, which allow us to generte HTTP
+The service, uses the `$http` angular object, which allow us to generate HTTP
 requests to the backend and obtain the results via callback functions defined by
 us. Here we define the `getUsers` function receiving this two callbacks that will
 be passed to the $http.get function as well. When the results arrive, they will be
