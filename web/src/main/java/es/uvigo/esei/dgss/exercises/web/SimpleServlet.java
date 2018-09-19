@@ -3,6 +3,7 @@ package es.uvigo.esei.dgss.exercises.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -41,14 +42,18 @@ public class SimpleServlet extends HttpServlet {
         writer.println("<body>");
         writer.println("<h1>Facade tests</h1>");
         
-        //task1
+        //task2_1
         writer.println("<form method='POST'>"
-                + "<button type='submit' name='task' value='1'>Task 1. Create User"
+                + "<button type='submit' name='task' value='2_1'>Task 2_1. Create User"
                 + "</button></form>");
         
-        //task2
+        //task2_2
         writer.println("<form method='POST'>"
-                + "<button type='submit' name='task' value='2'>Task 2. Create Friendship"
+                + "<button type='submit' name='task' value='2_2'>Task 2_2. Create Friendship"
+                + "</button></form>");
+        //task2_3
+        writer.println("<form method='POST'>"
+                + "<button type='submit' name='task' value='2_3'>Task 2_3. Get Friendships"
                 + "</button></form>");
 
         writer.println("</body>");
@@ -61,16 +66,19 @@ public class SimpleServlet extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         writer.println("<html><body>");
-        if (req.getParameter("task").equals("1")) {
-            task1(req, resp, writer);
+        if (req.getParameter("task").equals("2_1")) {
+            task2_1(req, resp, writer);
         }
-        if (req.getParameter("task").equals("2")) {
-            task2(req, resp, writer);
+        if (req.getParameter("task").equals("2_2")) {
+            task2_2(req, resp, writer);
+        }
+        if (req.getParameter("task").equals("2_3")) {
+            task2_3(req, resp, writer);
         }
         writer.println("</body></html>");
     }
 
-    private void task1(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) 
+    private void task2_1(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) 
             throws IOException {
         // work with Facade
 
@@ -103,20 +111,60 @@ public class SimpleServlet extends HttpServlet {
 
     }
     
-    private void task2(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) 
+    private void task2_2(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) 
             throws IOException {
         // work with Facade
 
         try {
             transaction.begin();
 
-            // Task 2.1
+            // Task 2.2
             UserFriendship uf = facade.addFriendship(new User(UUID.randomUUID().toString()), new User(UUID.randomUUID().toString()), new Date());
             writer.println("User frienship 1" + uf.getUser1().getLogin() + " created successfully<br>");
             writer.println("User frienship 2" + uf.getUser2().getLogin() + " created successfully<br>");
             writer.println("Date" + uf.getDate() + " created successfully<br><br>");
 
             writer.println("<a href='SimpleServlet'>Go to menu</a>");
+
+            transaction.commit();
+
+        } catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+                | HeuristicMixedException | HeuristicRollbackException e) {
+            try {
+                transaction.rollback();
+            } catch (IllegalStateException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (SecurityException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (SystemException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        }
+
+    }
+    
+    private void task2_3(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) 
+            throws IOException {
+        // work with Facade
+
+        try {
+            transaction.begin();
+            System.out.println("Algo");
+            // Task 2.3
+            User u = new User(UUID.randomUUID().toString());
+
+            List<User> friends = facade.getFriendships(u);
+            
+            
+            writer.println("Friends of user " + u.getLogin() + ":<br><br>");
+            for(User friend : friends){
+            	writer.println(friend.getLogin() + ":<br>");
+            }
+
+            writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
 
             transaction.commit();
 
