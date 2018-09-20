@@ -12,6 +12,8 @@ public class User {
 	private String password;
 	private byte [] picture;
 	
+	//TODO OneToMany post
+	
 	public User() {}
 	
 	public User(String login){
