@@ -1,6 +1,5 @@
 package es.uvigo.esei.dgss.exercises.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,7 +17,7 @@ public class User {
 	private byte[] picture;
 
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-	private List<Post> posts = new ArrayList<>();
+	private List<Post> posts;
 
 	public User() {
 	}

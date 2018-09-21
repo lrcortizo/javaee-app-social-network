@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import es.uvigo.esei.dgss.exercises.domain.Post;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
 
@@ -61,4 +62,6 @@ public class Facade {
 		}
 		return toRet;
 	}
+	
+
 }

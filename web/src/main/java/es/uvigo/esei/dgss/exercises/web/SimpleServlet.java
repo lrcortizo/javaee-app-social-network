@@ -42,16 +42,21 @@ public class SimpleServlet extends HttpServlet {
 		writer.println("<h1>Facade tests</h1>");
 
 		// task2_1
-		writer.println("<form method='POST'>" + "<button type='submit' name='task' value='2_1'>Task 2_1. Create User"
+		writer.println("<form method='POST'>" + "<button type='submit' name='task' value='2_1'>Task 2_1. Create user"
 				+ "</button></form>");
 
 		// task2_2
 		writer.println("<form method='POST'>"
-				+ "<button type='submit' name='task' value='2_2'>Task 2_2. Create Friendship" + "</button></form>");
+				+ "<button type='submit' name='task' value='2_2'>Task 2_2. Create friendship" + "</button></form>");
+		
 		// task2_3
 		writer.println("<form method='POST'>"
-				+ "<button type='submit' name='task' value='2_3'>Task 2_3. Get Friendships" + "</button></form>");
-
+				+ "<button type='submit' name='task' value='2_3'>Task 2_3. Get friendships" + "</button></form>");
+		
+		// task2_4
+		writer.println("<form method='POST'>"
+				+ "<button type='submit' name='task' value='2_4'>Task 2_4. Get posts of friends" + "</button></form>");
+		
 		writer.println("</body>");
 		writer.println("</html>");
 
@@ -69,6 +74,9 @@ public class SimpleServlet extends HttpServlet {
 		}
 		if (req.getParameter("task").equals("2_3")) {
 			task2_3(req, resp, writer);
+		}
+		if (req.getParameter("task").equals("2_4")) {
+			task2_4(req, resp, writer);
 		}
 		writer.println("</body></html>");
 	}
@@ -145,7 +153,6 @@ public class SimpleServlet extends HttpServlet {
 
 		try {
 			transaction.begin();
-			System.out.println("Algo");
 			// Task 2.3
 			User u = new User(UUID.randomUUID().toString());
 
@@ -157,6 +164,34 @@ public class SimpleServlet extends HttpServlet {
 			}
 
 			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
+
+			transaction.commit();
+
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
+			try {
+				transaction.rollback();
+			} catch (IllegalStateException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	private void task2_4(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
+		// work with Facade
+
+		try {
+			transaction.begin();
+			// Task 2.4
+			//TODO task 2.4
 
 			transaction.commit();
 
