@@ -14,14 +14,15 @@ public class UserFriendship {
 	@Id
 	@ManyToOne
 	private User user1;
-	
+
 	@Id
 	@ManyToOne
 	private User user2;
-	
+
 	private Date date;
-	
-	public UserFriendship(){}
+
+	public UserFriendship() {
+	}
 
 	public User getUser1() {
 		return user1;
@@ -46,6 +47,5 @@ public class UserFriendship {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
+
 }

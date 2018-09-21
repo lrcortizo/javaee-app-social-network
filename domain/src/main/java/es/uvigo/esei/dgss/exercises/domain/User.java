@@ -1,23 +1,30 @@
 package es.uvigo.esei.dgss.exercises.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
-	
+
 	@Id
 	private String login;
 	private String name;
 	private String password;
-	private byte [] picture;
-	
-	//TODO OneToMany post
-	
-	public User() {}
-	
-	public User(String login){
-		this.login=login;
+	private byte[] picture;
+
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	private List<Post> posts = new ArrayList<>();
+
+	public User() {
+	}
+
+	public User(String login) {
+		this.login = login;
 	}
 
 	public String getLogin() {
@@ -51,5 +58,13 @@ public class User {
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
-	
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
 }
