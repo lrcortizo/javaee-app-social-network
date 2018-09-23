@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 public class Video extends Post {
 
 	private String duration;
+	
+	public Video(){}
 
 	public String getDuration() {
 		return duration;

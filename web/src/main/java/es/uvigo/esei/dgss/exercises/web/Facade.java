@@ -10,9 +10,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import es.uvigo.esei.dgss.exercises.domain.Link;
+import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
+import es.uvigo.esei.dgss.exercises.domain.Video;
 
 @Dependent
 public class Facade {
@@ -62,6 +65,40 @@ public class Facade {
 		}
 		return toRet;
 	}
-	
+
+	public List<Post> getFriendsPosts(User user) {
+		// Creating friends
+		User prueba1 = new User(UUID.randomUUID().toString());
+		addFriendship(user, prueba1, new Date());
+		User prueba2 = new User(UUID.randomUUID().toString());
+		addFriendship(user, prueba2, new Date());
+		User prueba3 = new User(UUID.randomUUID().toString());
+		em.persist(prueba3);
+
+		// Creating posts
+		Post post1 = new Link();
+		post1.setUser(prueba1);
+		Post post2 = new Video();
+		post2.setUser(prueba1);
+		Post post3 = new Photo();
+		post3.setUser(prueba2);
+		Post post4 = new Link();
+		post4.setUser(prueba3);
+		Post post5 = new Video();
+		post5.setUser(prueba3);
+
+		em.persist(post1);
+		em.persist(post2);
+		em.persist(post3);
+		em.persist(post4);
+		em.persist(post5);
+
+		Query query = em.createQuery(
+				"SELECT p FROM Post p WHERE EXISTS (SELECT u FROM UserFriendship u WHERE u.user1 in :us AND p.user = u.user2)",
+				Post.class).setParameter("us", user);
+
+		List<Post> posts = (List<Post>) query.getResultList();
+		return posts;
+	}
 
 }

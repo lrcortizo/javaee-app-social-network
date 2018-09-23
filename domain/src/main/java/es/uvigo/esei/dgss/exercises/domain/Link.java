@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 public class Link extends Post {
 
 	private String url;
+	
+	public Link(){}
 
 	public String getUrl() {
 		return url;

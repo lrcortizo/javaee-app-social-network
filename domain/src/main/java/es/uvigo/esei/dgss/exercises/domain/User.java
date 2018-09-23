@@ -16,7 +16,7 @@ public class User {
 	private String password;
 	private byte[] picture;
 
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
 	private List<Post> posts;
 
 	public User() {

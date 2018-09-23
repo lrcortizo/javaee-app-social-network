@@ -20,6 +20,7 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import es.uvigo.esei.dgss.exercises.domain.Post;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
 
@@ -160,7 +161,7 @@ public class SimpleServlet extends HttpServlet {
 
 			writer.println("Friends of user " + u.getLogin() + ":<br><br>");
 			for (User friend : friends) {
-				writer.println(friend.getLogin() + ":<br>");
+				writer.println(friend.getLogin() + "<br>");
 			}
 
 			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
@@ -191,7 +192,16 @@ public class SimpleServlet extends HttpServlet {
 		try {
 			transaction.begin();
 			// Task 2.4
-			//TODO task 2.4
+			User u = new User(UUID.randomUUID().toString());
+
+			List<Post> posts = facade.getFriendsPosts(u);
+
+			writer.println("Friends posts of user " + u.getLogin() + ":<br><br>");
+			for (Post post : posts) {
+				writer.println(post.getId() + "<br>");
+			}
+
+			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
 
 			transaction.commit();
 

@@ -3,6 +3,8 @@ package es.uvigo.esei.dgss.exercises.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -10,17 +12,21 @@ import javax.persistence.ManyToOne;
 public abstract class Post {
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	
 	private Date date;
 
 	@ManyToOne
 	private User user;
+	
+	public Post() {}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

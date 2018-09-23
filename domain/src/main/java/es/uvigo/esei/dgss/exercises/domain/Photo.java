@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 public class Photo extends Post {
 
 	private Byte[] content;
+	
+	public Photo(){}
 
 	public Byte[] getContent() {
 		return content;
