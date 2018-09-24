@@ -2,7 +2,9 @@ package es.uvigo.esei.dgss.exercises.domain;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,9 @@ public abstract class Post {
 
 	@ManyToOne
 	private User user;
+	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comment> comments;
 	
 	@OneToMany(mappedBy="post")
 	private Collection<Like> likes;
@@ -49,6 +54,14 @@ public abstract class Post {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public Collection<Like> getLikes() {

@@ -21,6 +21,9 @@ public class Comment {
 	@ManyToOne
 	private User user;
 	
+	@ManyToOne
+	private Post post;
+	
 	public Comment(){
 	}
 
@@ -54,6 +57,14 @@ public class Comment {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
 	}
 	
 }
