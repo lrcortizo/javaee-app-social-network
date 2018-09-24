@@ -27,14 +27,35 @@ public class UserFriendshipId implements Serializable {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((user1 == null) ? 0 : user1.hashCode());
+		result = prime * result + ((user2 == null) ? 0 : user2.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserFriendshipId other = (UserFriendshipId) obj;
+		if (user1 == null) {
+			if (other.user1 != null)
+				return false;
+		} else if (!user1.equals(other.user1))
+			return false;
+		if (user2 == null) {
+			if (other.user2 != null)
+				return false;
+		} else if (!user2.equals(other.user2))
+			return false;
+		return true;
 	}
+
+	
 
 }

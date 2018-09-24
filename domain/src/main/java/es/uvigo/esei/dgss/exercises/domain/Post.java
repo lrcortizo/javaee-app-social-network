@@ -1,5 +1,6 @@
 package es.uvigo.esei.dgss.exercises.domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -7,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public abstract class Post {
@@ -19,6 +21,9 @@ public abstract class Post {
 
 	@ManyToOne
 	private User user;
+	
+	@OneToMany(mappedBy="post")
+	private Collection<Like> likes;
 	
 	public Post() {}
 
@@ -46,4 +51,12 @@ public abstract class Post {
 		this.user = user;
 	}
 
+	public Collection<Like> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(Collection<Like> likes) {
+		this.likes = likes;
+	}
+	
 }

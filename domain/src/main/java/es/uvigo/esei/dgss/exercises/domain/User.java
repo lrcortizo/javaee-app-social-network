@@ -1,5 +1,6 @@
 package es.uvigo.esei.dgss.exercises.domain;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,12 +13,16 @@ public class User {
 
 	@Id
 	private String login;
+	
 	private String name;
 	private String password;
 	private byte[] picture;
 
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Post> posts;
+
+	@OneToMany(mappedBy = "user")
+	private Collection<Like> likes;
 
 	public User() {
 	}
@@ -64,6 +69,14 @@ public class User {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	public Collection<Like> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(Collection<Like> likes) {
+		this.likes = likes;
 	}
 
 }
