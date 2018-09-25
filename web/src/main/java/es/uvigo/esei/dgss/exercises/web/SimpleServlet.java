@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,7 @@ public class SimpleServlet extends HttpServlet {
 	@Resource
 	private UserTransaction transaction;
 	
-	@Inject
+	@EJB
 	private UserEJB userEJB;
 
 	@Override
@@ -66,9 +67,6 @@ public class SimpleServlet extends HttpServlet {
 		writer.println("<form method='POST'>"
 				+ "<button type='submit' name='task' value='2_4'>Task 2_4. Get posts of friends" + "</button></form>");
 		
-		// task2_4
-				writer.println("<form method='POST'>"
-						+ "<button type='submit' name='task' value='2_4'>Task 2_4. Get posts of friends" + "</button></form>");
 				
 		// task2_5
 		writer.println("<form method='POST'>"
