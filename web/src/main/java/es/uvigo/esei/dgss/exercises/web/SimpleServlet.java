@@ -20,10 +20,10 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import es.uvigo.esei.dgss.exercise.service.UserEJB;
 import es.uvigo.esei.dgss.exercises.domain.Post;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
-import es.uvigo.esei.dgss.exercises.service.sample.UserEJB;
 
 @WebServlet("/SimpleServlet")
 public class SimpleServlet extends HttpServlet {

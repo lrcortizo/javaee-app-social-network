@@ -1,4 +1,4 @@
-package es.uvigo.esei.dgss.exercises.service.sample;
+package es.uvigo.esei.dgss.exercise.service;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
