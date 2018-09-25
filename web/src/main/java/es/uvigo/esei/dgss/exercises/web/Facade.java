@@ -121,7 +121,7 @@ public class Facade {
 	
 	//Exercise 1, Task 2.7
 	//TODO
-	public List<Photo> getPicturesUserLike(User user) {
+	public List<Photo> getPicturesUserLikes(User user) {
 		List<Photo> toRet = new ArrayList<>();
 		return toRet;
 	}

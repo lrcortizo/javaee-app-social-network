@@ -23,6 +23,7 @@ import javax.transaction.UserTransaction;
 import es.uvigo.esei.dgss.exercises.domain.Post;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
+import es.uvigo.esei.dgss.exercises.service.sample.UserEJB;
 
 @WebServlet("/SimpleServlet")
 public class SimpleServlet extends HttpServlet {
@@ -32,6 +33,9 @@ public class SimpleServlet extends HttpServlet {
 
 	@Resource
 	private UserTransaction transaction;
+	
+	@Inject
+	private UserEJB userEJB;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,6 +48,10 @@ public class SimpleServlet extends HttpServlet {
 
 		// task2_1
 		writer.println("<form method='POST'>" + "<button type='submit' name='task' value='2_1'>Task 2_1. Create user"
+				+ "</button></form>");
+		
+		// task2_1_2
+		writer.println("<form method='POST'>" + "<button type='submit' name='task' value='2_1_EJB'>Task 2_1_EJB. Create user with EJB"
 				+ "</button></form>");
 
 		// task2_2
@@ -58,6 +66,26 @@ public class SimpleServlet extends HttpServlet {
 		writer.println("<form method='POST'>"
 				+ "<button type='submit' name='task' value='2_4'>Task 2_4. Get posts of friends" + "</button></form>");
 		
+		// task2_4
+				writer.println("<form method='POST'>"
+						+ "<button type='submit' name='task' value='2_4'>Task 2_4. Get posts of friends" + "</button></form>");
+				
+		// task2_5
+		writer.println("<form method='POST'>"
+				+ "<button type='submit' name='task' value='2_5'>Task 2_5. Get commented posts of friends" + "</button></form>");
+		
+		// task2_6
+		writer.println("<form method='POST'>"
+				+ "<button type='submit' name='task' value='2_6'>Task 2_6. Unnamed" + "</button></form>");
+		
+		// task2_7
+		writer.println("<form method='POST'>"
+				+ "<button type='submit' name='task' value='2_7'>Task 2_7. Get pictures that user likes" + "</button></form>");
+		
+		// task2_8
+		writer.println("<form method='POST'>"
+				+ "<button type='submit' name='task' value='2_8'>Task 2_8. Get potential friends" + "</button></form>");
+		
 		writer.println("</body>");
 		writer.println("</html>");
 
@@ -68,6 +96,9 @@ public class SimpleServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		writer.println("<html><body>");
 		if (req.getParameter("task").equals("2_1")) {
+			task2_1(req, resp, writer);
+		}
+		if (req.getParameter("task").equals("2_1_EJB")) {
 			task2_1(req, resp, writer);
 		}
 		if (req.getParameter("task").equals("2_2")) {
@@ -123,6 +154,17 @@ public class SimpleServlet extends HttpServlet {
 				e1.printStackTrace();
 			}
 		}
+
+	}
+	
+	private void task2_1_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
+		// work with Facade
+		// Task 2.1
+		User u = new User(UUID.randomUUID().toString());
+		userEJB.createUser(u);
+		writer.println("User " + u.getLogin() + " created successfully with EJB<br><br>");
+
+		writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 	}
 
