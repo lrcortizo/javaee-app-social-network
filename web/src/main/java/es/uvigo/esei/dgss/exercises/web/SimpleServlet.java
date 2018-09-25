@@ -79,6 +79,18 @@ public class SimpleServlet extends HttpServlet {
 		if (req.getParameter("task").equals("2_4")) {
 			task2_4(req, resp, writer);
 		}
+		if (req.getParameter("task").equals("2_5")) {
+			task2_5(req, resp, writer);
+		}
+		if (req.getParameter("task").equals("2_6")) {
+			task2_6(req, resp, writer);
+		}
+		if (req.getParameter("task").equals("2_7")) {
+			task2_7(req, resp, writer);
+		}
+		if (req.getParameter("task").equals("2_8")) {
+			task2_8(req, resp, writer);
+		}
 		writer.println("</body></html>");
 	}
 
@@ -202,6 +214,130 @@ public class SimpleServlet extends HttpServlet {
 			}
 
 			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
+
+			transaction.commit();
+
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
+			try {
+				transaction.rollback();
+			} catch (IllegalStateException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	private void task2_5(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
+		// work with Facade
+
+		try {
+			transaction.begin();
+
+			// Task 2.5
+			//TODO
+
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+
+			transaction.commit();
+
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
+			try {
+				transaction.rollback();
+			} catch (IllegalStateException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	private void task2_6(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
+		// work with Facade
+
+		try {
+			transaction.begin();
+
+			// Task 2.6
+			//TODO
+
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+
+			transaction.commit();
+
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
+			try {
+				transaction.rollback();
+			} catch (IllegalStateException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	private void task2_7(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
+		// work with Facade
+
+		try {
+			transaction.begin();
+
+			// Task 2.7
+			//TODO
+
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+
+			transaction.commit();
+
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
+			try {
+				transaction.rollback();
+			} catch (IllegalStateException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	private void task2_8(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
+		// work with Facade
+
+		try {
+			transaction.begin();
+
+			// Task 2.8
+			//TODO
+
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 			transaction.commit();
 

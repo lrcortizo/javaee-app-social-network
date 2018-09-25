@@ -26,7 +26,8 @@ public class Facade {
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}
-
+	
+	//Exercise 1, Task 2.1
 	public User addUser(String login, String name, String password, byte[] picture) {
 		User user = new User(login);
 
@@ -38,7 +39,8 @@ public class Facade {
 
 		return user;
 	}
-
+	
+	//Exercise 1, Task 2.2
 	public UserFriendship addFriendship(User user1, User user2, Date date) {
 		UserFriendship friendship = new UserFriendship();
 
@@ -51,6 +53,7 @@ public class Facade {
 		return friendship;
 	}
 
+	//Exercise 1, Task 2.3
 	public List<User> getFriendships(User user) {
 		addFriendship(user, new User(UUID.randomUUID().toString()), new Date());
 		addFriendship(user, new User(UUID.randomUUID().toString()), new Date());
@@ -65,7 +68,8 @@ public class Facade {
 		}
 		return toRet;
 	}
-
+	
+	//Exercise 1, Task 2.4
 	public List<Post> getFriendsPosts(User user) {
 		// Creating friends
 		User prueba1 = new User(UUID.randomUUID().toString());
@@ -99,6 +103,34 @@ public class Facade {
 
 		List<Post> posts = (List<Post>) query.getResultList();
 		return posts;
+	}
+	
+	//Exercise 1, Task 2.5
+	//TODO
+	public List<Post> getCommentedPostsByFriends(User user, Date date) {
+		List<Post> posts = new ArrayList<>();
+		return posts;
+	}
+	
+	//Exercise 1, Task 2.6
+	//TODO
+	public List<User> Unnamed(User user, Post post) {
+		List<User> toRet = new ArrayList<>();
+		return toRet;
+	}
+	
+	//Exercise 1, Task 2.7
+	//TODO
+	public List<Photo> getPicturesUserLike(User user) {
+		List<Photo> toRet = new ArrayList<>();
+		return toRet;
+	}
+	
+	//Exercise 1, Task 2.8
+	//TODO
+	public List<User> getPotentialFriends(User user){
+		List<User> toRet = new ArrayList<>();
+		return toRet;
 	}
 
 }
