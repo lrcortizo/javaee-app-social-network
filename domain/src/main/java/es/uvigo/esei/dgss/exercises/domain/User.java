@@ -18,7 +18,10 @@ public class User {
 	private String name;
 	private String password;
 	private byte[] picture;
-
+	
+	@OneToMany(mappedBy = "user1", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Collection<UserFriendship> frienships = new ArrayList<>();
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Post> posts = new ArrayList<>();
 	
@@ -62,9 +65,17 @@ public class User {
 	public byte[] getPicture() {
 		return picture;
 	}
-
+	
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
+	}
+
+	public Collection<UserFriendship> getFrienships() {
+		return frienships;
+	}
+
+	public void setFrienships(Collection<UserFriendship> frienships) {
+		this.frienships = frienships;
 	}
 
 	public List<Post> getPosts() {
