@@ -96,7 +96,7 @@ public class SimpleServlet extends HttpServlet {
 			task2_1(req, resp, writer);
 		}
 		if (req.getParameter("task").equals("2_1_EJB")) {
-			task2_1(req, resp, writer);
+			task2_1_EJB(req, resp, writer);
 		}
 		if (req.getParameter("task").equals("2_2")) {
 			task2_2(req, resp, writer);
