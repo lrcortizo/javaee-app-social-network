@@ -2,7 +2,6 @@ package es.uvigo.esei.dgss.exercises.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -174,7 +173,7 @@ public class SimpleServlet extends HttpServlet {
 
 			// Task 2.2
 			UserFriendship uf = facade.addFriendship(new User(UUID.randomUUID().toString()),
-					new User(UUID.randomUUID().toString()), new Date());
+					new User(UUID.randomUUID().toString()));
 			writer.println("User frienship 1" + uf.getUser1().getLogin() + " created successfully<br>");
 			writer.println("User frienship 2" + uf.getUser2().getLogin() + " created successfully<br>");
 			writer.println("Date" + uf.getDate() + " created successfully<br><br>");

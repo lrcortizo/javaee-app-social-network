@@ -41,12 +41,12 @@ public class Facade {
 	}
 
 	// Exercise 1, Task 2.2
-	public UserFriendship addFriendship(User user1, User user2, Date date) {
+	public UserFriendship addFriendship(User user1, User user2) {
 		UserFriendship friendship = new UserFriendship();
 
 		friendship.setUser1(user1);
 		friendship.setUser2(user2);
-		friendship.setDate(date);
+		friendship.setDate(new Date());
 
 		em.persist(friendship);
 
@@ -55,9 +55,9 @@ public class Facade {
 
 	// Exercise 1, Task 2.3
 	public List<User> getFriendships(User user) {
-		addFriendship(user, new User(UUID.randomUUID().toString()), new Date());
-		addFriendship(user, new User(UUID.randomUUID().toString()), new Date());
-		addFriendship(user, new User(UUID.randomUUID().toString()), new Date());
+		addFriendship(user, new User(UUID.randomUUID().toString()));
+		addFriendship(user, new User(UUID.randomUUID().toString()));
+		addFriendship(user, new User(UUID.randomUUID().toString()));
 
 		Query query = em.createQuery("SELECT u FROM UserFriendship u WHERE u.user1 in :us", UserFriendship.class)
 				.setParameter("us", user);
@@ -73,9 +73,9 @@ public class Facade {
 	public List<Post> getFriendsPosts(User user) {
 		// Creating friends
 		User prueba1 = new User(UUID.randomUUID().toString());
-		addFriendship(user, prueba1, new Date());
+		addFriendship(user, prueba1);
 		User prueba2 = new User(UUID.randomUUID().toString());
-		addFriendship(user, prueba2, new Date());
+		addFriendship(user, prueba2);
 		User prueba3 = new User(UUID.randomUUID().toString());
 		em.persist(prueba3);
 
