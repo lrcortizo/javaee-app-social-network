@@ -1,5 +1,6 @@
 package es.uvigo.esei.dgss.exercises.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -25,10 +26,10 @@ public abstract class Post {
 	private User user;
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Comment> comments;
+	private List<Comment> comments = new ArrayList<>();
 	
 	@OneToMany(mappedBy="post")
-	private Collection<Like> likes;
+	private Collection<Like> likes = new ArrayList<>();
 	
 	public Post() {}
 

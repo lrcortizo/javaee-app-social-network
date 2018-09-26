@@ -1,5 +1,6 @@
 package es.uvigo.esei.dgss.exercises.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,13 +20,13 @@ public class User {
 	private byte[] picture;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Post> posts;
+	private List<Post> posts = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Comment> comments;
+	private List<Comment> comments = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
-	private Collection<Like> likes;
+	private Collection<Like> likes = new ArrayList<>();
 
 	public User() {
 	}
