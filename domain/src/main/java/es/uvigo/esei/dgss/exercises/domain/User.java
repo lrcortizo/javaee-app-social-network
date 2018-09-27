@@ -20,7 +20,10 @@ public class User {
 	private byte[] picture;
 	
 	@OneToMany(mappedBy = "user1", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Collection<UserFriendship> frienships = new ArrayList<>();
+	private Collection<UserFriendship> friends = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user2", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Collection<UserFriendship> friendOf = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Post> posts = new ArrayList<>();
@@ -70,12 +73,20 @@ public class User {
 		this.picture = picture;
 	}
 
-	public Collection<UserFriendship> getFrienships() {
-		return frienships;
+	public Collection<UserFriendship> getFriends() {
+		return friends;
 	}
 
-	public void setFrienships(Collection<UserFriendship> frienships) {
-		this.frienships = frienships;
+	public void setFriends(Collection<UserFriendship> friends) {
+		this.friends = friends;
+	}
+
+	public Collection<UserFriendship> getFriendOf() {
+		return friendOf;
+	}
+
+	public void setFriendOf(Collection<UserFriendship> friendOf) {
+		this.friendOf = friendOf;
 	}
 
 	public List<Post> getPosts() {
