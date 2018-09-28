@@ -3,6 +3,7 @@ package es.uvigo.esei.dgss.exercises.domain;
 import java.io.Serializable;
 
 public class UserFriendshipId implements Serializable {
+	
 	private String user1;
 	private String user2;
 

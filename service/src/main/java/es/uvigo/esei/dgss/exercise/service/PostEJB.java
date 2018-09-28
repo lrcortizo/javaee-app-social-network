@@ -20,15 +20,19 @@ public class PostEJB {
 		return em.find(Post.class, id);
 	}
 	
+	public Comment findCommentById(int id) {
+		return em.find(Comment.class, id);
+	}
+	
+	//TODO video, photo, link
 	public Post createPost(Post post){
 		em.persist(post);
 		return post;
 	}
 	
-	//TODO video, photo, link
-	public Post updatePost(int id, Date date){
+	public Post updatePost(int id){
 		Post post = findPostById(id);
-		post.setDate(date);
+		post.setDate(new Date());
 		em.persist(post);
 		return post;
 	}
@@ -45,6 +49,18 @@ public class PostEJB {
 		comment.setDate(new Date());
 		em.persist(comment);
 		return comment;
+	}
+	
+	public Comment updateComment(int id, String text){
+		Comment comment = findCommentById(id);
+		comment.setComment(text);
+		comment.setDate(new Date());
+		em.persist(comment);
+		return comment;
+	}
+	
+	public void removeComment(Comment comment){
+		em.remove(comment);
 	}
 }
 
