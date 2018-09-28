@@ -45,5 +45,9 @@ public class UserEJB {
 		em.persist(uf);
 		return uf;
 	}
+	
+	public void removeFriendship(UserFriendship uf) {
+		em.remove(uf);
+	}
 
 }
