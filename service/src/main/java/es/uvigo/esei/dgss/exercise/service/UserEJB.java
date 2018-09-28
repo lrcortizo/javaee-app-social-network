@@ -1,6 +1,8 @@
 package es.uvigo.esei.dgss.exercise.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,6 +20,13 @@ public class UserEJB {
 
 	public User findUserById(String login) {
 		return em.find(User.class, login);
+	}
+	
+	public List<User> getUsers(){
+		List<User> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+		return toRet;
+		
 	}
 
 	public User createUser(User user) {
@@ -49,6 +58,14 @@ public class UserEJB {
 	
 	public void removeFriendship(UserFriendship uf) {
 		em.remove(uf);
+	}
+	
+	public List<User> getFriends(User user){
+		List<User> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT u.user2 FROM UserFriendship u WHERE u.user1 in :us", User.class)
+				.setParameter("us", user).getResultList();
+		
+		return toRet;
 	}
 	
 	public Like addLike(User user, Like like){
