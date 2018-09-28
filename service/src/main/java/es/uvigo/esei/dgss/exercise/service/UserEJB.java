@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import es.uvigo.esei.dgss.exercises.domain.Like;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
 
@@ -48,6 +49,16 @@ public class UserEJB {
 	
 	public void removeFriendship(UserFriendship uf) {
 		em.remove(uf);
+	}
+	
+	public Like addLike(User user, Like like){
+		user.addLike(like);
+		em.persist(user);
+		return like;
+	}
+	
+	public void removeLike(Like like){
+		em.remove(like);
 	}
 
 }

@@ -112,5 +112,9 @@ public class User {
 	public void setLikes(Collection<Like> likes) {
 		this.likes = likes;
 	}
-
+	
+	public void addLike(Like like){
+		this.likes.add(like);
+		like.setUser(this);
+	}
 }
