@@ -262,7 +262,7 @@ public class SimpleServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void task2_2_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
@@ -270,7 +270,11 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.2.EJB
-			// TODO
+			UserFriendship uf = userEJB.createFriendship(new User(UUID.randomUUID().toString()),
+					new User(UUID.randomUUID().toString()));
+			writer.println("User frienship 1" + uf.getUser1().getLogin() + " created successfully<br>");
+			writer.println("User frienship 2" + uf.getUser2().getLogin() + " created successfully<br>");
+			writer.println("Date" + uf.getDate() + " created successfully<br><br>");
 
 			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
@@ -330,7 +334,7 @@ public class SimpleServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void task2_3_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
@@ -398,7 +402,7 @@ public class SimpleServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void task2_4_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
@@ -460,7 +464,7 @@ public class SimpleServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void task2_5_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
@@ -522,7 +526,7 @@ public class SimpleServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void task2_6_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
@@ -584,7 +588,7 @@ public class SimpleServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void task2_7_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
@@ -646,7 +650,7 @@ public class SimpleServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void task2_8_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
