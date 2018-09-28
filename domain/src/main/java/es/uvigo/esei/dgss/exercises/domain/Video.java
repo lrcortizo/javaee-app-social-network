@@ -5,15 +5,15 @@ import javax.persistence.Entity;
 @Entity
 public class Video extends Post {
 
-	private String duration;
+	private Integer duration;
 	
 	public Video(){}
 
-	public String getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 

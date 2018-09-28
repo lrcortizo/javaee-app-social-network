@@ -7,8 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import es.uvigo.esei.dgss.exercises.domain.Comment;
+import es.uvigo.esei.dgss.exercises.domain.Link;
+import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
-import es.uvigo.esei.dgss.exercises.domain.User;
+import es.uvigo.esei.dgss.exercises.domain.Video;
 
 @Stateless
 public class PostEJB {
@@ -24,30 +26,52 @@ public class PostEJB {
 		return em.find(Comment.class, id);
 	}
 	
-	//TODO video, photo, link
-	public Post createPost(Post post){
+	public Video createVideo(Video video){
+		em.persist(video);
+		return video;
+	}
+	
+	public Photo createPhoto(Photo photo){
+		em.persist(photo);
+		return photo;
+	}
+	
+	public Link createLink(Link link){
+		em.persist(link);
+		return link;
+	}
+	
+	public Video updateVideo(int id, Integer duration){
+		Video video = (Video) findPostById(id);
+		video.setDuration(duration);
+		video.setDate(new Date());
+		em.persist(video);
+		return video;
+	}
+	
+	public Photo updatePhoto(int id, Byte [] content){
+		Photo photo = (Photo) findPostById(id);
+		photo.setContent(content);
+		photo.setDate(new Date());
+		em.persist(photo);
+		return photo;
+	}
+	
+	public Link updateLink(int id, String url){
+		Link link = (Link) findPostById(id);
+		link.setUrl(url);
+		link.setDate(new Date());
+		em.persist(link);
+		return link;
+	}
+	
+	public void removePost(Post post){
+		em.remove(post);
+	}
+	
+	public Comment addComment(Post post, Comment comment){
+		post.addComment(comment);
 		em.persist(post);
-		return post;
-	}
-	
-	public Post updatePost(int id){
-		Post post = findPostById(id);
-		post.setDate(new Date());
-		em.persist(post);
-		return post;
-	}
-	
-	public void removePost(Post Post){
-		em.remove(Post);
-	}
-	
-	public Comment addComment(User user, Post post, String text){
-		Comment comment = new Comment();
-		comment.setUser(user);
-		comment.setPost(post);
-		comment.setComment(text);
-		comment.setDate(new Date());
-		em.persist(comment);
 		return comment;
 	}
 	

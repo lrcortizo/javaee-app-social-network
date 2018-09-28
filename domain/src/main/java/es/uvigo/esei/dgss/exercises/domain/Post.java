@@ -73,4 +73,9 @@ public abstract class Post {
 		this.likes = likes;
 	}
 	
+	public void addComment(Comment comment){
+		this.comments.add(comment);
+		comment.setPost(this);
+	}
+	
 }
