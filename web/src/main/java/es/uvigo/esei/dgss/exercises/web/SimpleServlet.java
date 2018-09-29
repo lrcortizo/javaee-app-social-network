@@ -74,7 +74,7 @@ public class SimpleServlet extends HttpServlet {
 
 		// task2_3_EJB
 		writer.println("<form method='POST'>"
-				+ "<button type='submit' name='task' value='2_3_EJB'>Task 2_3_EJB. Get friendships woth EJB"
+				+ "<button type='submit' name='task' value='2_3_EJB'>Task 2_3_EJB. Get friendships with EJB"
 				+ "</button></form>");
 
 		// task2_4
@@ -266,35 +266,14 @@ public class SimpleServlet extends HttpServlet {
 	private void task2_2_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
-		try {
-			transaction.begin();
+		// Task 2.2.EJB
+		UserFriendship uf = userEJB.createFriendship(new User(UUID.randomUUID().toString()),
+				new User(UUID.randomUUID().toString()));
+		writer.println("User frienship 1" + uf.getUser1().getLogin() + " created successfully<br>");
+		writer.println("User frienship 2" + uf.getUser2().getLogin() + " created successfully<br>");
+		writer.println("Date" + uf.getDate() + " created successfully<br><br>");
 
-			// Task 2.2.EJB
-			UserFriendship uf = userEJB.createFriendship(new User(UUID.randomUUID().toString()),
-					new User(UUID.randomUUID().toString()));
-			writer.println("User frienship 1" + uf.getUser1().getLogin() + " created successfully<br>");
-			writer.println("User frienship 2" + uf.getUser2().getLogin() + " created successfully<br>");
-			writer.println("Date" + uf.getDate() + " created successfully<br><br>");
-
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
-
-			transaction.commit();
-
-		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
-				| HeuristicMixedException | HeuristicRollbackException e) {
-			try {
-				transaction.rollback();
-			} catch (IllegalStateException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SystemException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 	}
 
@@ -304,6 +283,7 @@ public class SimpleServlet extends HttpServlet {
 		try {
 			transaction.begin();
 			// Task 2.3
+			
 			User u = new User(UUID.randomUUID().toString());
 
 			List<User> friends = facade.getFriendships(u);
@@ -337,32 +317,20 @@ public class SimpleServlet extends HttpServlet {
 
 	private void task2_3_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
-
-		try {
-			transaction.begin();
-
-			// Task 2.3.EJB
-			// TODO
-
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
-
-			transaction.commit();
-
-		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
-				| HeuristicMixedException | HeuristicRollbackException e) {
-			try {
-				transaction.rollback();
-			} catch (IllegalStateException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SystemException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		// Task 2.3.EJB
+		//Problema con crear amigos de un usuario ya persistido
+		User u = userEJB.createUser(new User(UUID.randomUUID().toString()));
+		userEJB.createFriendship(u, new User(UUID.randomUUID().toString()));
+		userEJB.createFriendship(u, new User(UUID.randomUUID().toString()));
+		
+		List<User> friends = userEJB.getFriends(u);
+		
+		writer.println("Friends of user " + u.getLogin() + ":<br><br>");
+		for (User friend : friends) {
+			writer.println(friend.getLogin() + "<br>");
 		}
+
+		writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 	}
 
@@ -406,31 +374,10 @@ public class SimpleServlet extends HttpServlet {
 	private void task2_4_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
-		try {
-			transaction.begin();
+		// Task 2.4.EJB
+		// TODO
 
-			// Task 2.4.EJB
-			// TODO
-
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
-
-			transaction.commit();
-
-		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
-				| HeuristicMixedException | HeuristicRollbackException e) {
-			try {
-				transaction.rollback();
-			} catch (IllegalStateException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SystemException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 	}
 
@@ -468,31 +415,10 @@ public class SimpleServlet extends HttpServlet {
 	private void task2_5_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
-		try {
-			transaction.begin();
+		// Task 2.5.EJB
+		// TODO
 
-			// Task 2.5.EJB
-			// TODO
-
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
-
-			transaction.commit();
-
-		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
-				| HeuristicMixedException | HeuristicRollbackException e) {
-			try {
-				transaction.rollback();
-			} catch (IllegalStateException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SystemException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 	}
 
