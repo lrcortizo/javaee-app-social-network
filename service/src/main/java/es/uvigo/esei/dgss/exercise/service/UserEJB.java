@@ -28,6 +28,14 @@ public class UserEJB {
 		return toRet;
 		
 	}
+	
+	public List<User> getFriends(User user){
+		List<User> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT u.user2 FROM UserFriendship u WHERE u.user1 in :us", User.class)
+				.setParameter("us", user).getResultList();
+		
+		return toRet;
+	}
 
 	public User createUser(User user) {
 		em.persist(user);
@@ -58,14 +66,6 @@ public class UserEJB {
 	
 	public void removeFriendship(UserFriendship uf) {
 		em.remove(uf);
-	}
-	
-	public List<User> getFriends(User user){
-		List<User> toRet = new ArrayList<>();
-		toRet = em.createQuery("SELECT u.user2 FROM UserFriendship u WHERE u.user1 in :us", User.class)
-				.setParameter("us", user).getResultList();
-		
-		return toRet;
 	}
 	
 	public Like addLike(User user, Like like){

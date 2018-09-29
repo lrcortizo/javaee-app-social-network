@@ -1,6 +1,8 @@
 package es.uvigo.esei.dgss.exercise.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,6 +12,7 @@ import es.uvigo.esei.dgss.exercises.domain.Comment;
 import es.uvigo.esei.dgss.exercises.domain.Link;
 import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
+import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.Video;
 
 @Stateless
@@ -24,6 +27,54 @@ public class PostEJB {
 	
 	public Comment findCommentById(int id) {
 		return em.find(Comment.class, id);
+	}
+	
+	public List<Post> getPosts() {
+		List<Post> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p", Post.class).getResultList();
+		return toRet;
+	} 
+	
+	public List<Post> getPostsOfUser(User user) {
+		List<Post> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us", Post.class).setParameter("us", user).getResultList();
+		return toRet;
+	}
+	
+	public List<Video> getVideos() {
+		List<Video> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p", Video.class).getResultList();
+		return toRet;
+	} 
+	
+	public List<Video> getVideosOfUser(User user) {
+		List<Video> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us", Video.class).setParameter("us", user).getResultList();
+		return toRet;
+	}
+	
+	public List<Photo> getPhotos() {
+		List<Photo> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p", Photo.class).getResultList();
+		return toRet;
+	} 
+	
+	public List<Photo> getPhotosOfUser(User user) {
+		List<Photo> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us", Photo.class).setParameter("us", user).getResultList();
+		return toRet;
+	}
+	
+	public List<Link> getLinks() {
+		List<Link> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p", Link.class).getResultList();
+		return toRet;
+	} 
+	
+	public List<Link> getLinksOfUser(User user) {
+		List<Link> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us", Link.class).setParameter("us", user).getResultList();
+		return toRet;
 	}
 	
 	public Video createVideo(Video video){
