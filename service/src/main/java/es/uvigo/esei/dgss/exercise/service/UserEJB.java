@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,9 +19,17 @@ public class UserEJB {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Resource
+	private SessionContext ctx;
 
 	public User findUserById(String login) {
-		return em.find(User.class, login);
+		if(ctx.getCallerPrincipal().getName().equals("login")){
+			return em.find(User.class, login);
+		} else {
+			throw new SecurityException("The authorized user is not "+login);
+		}
+		
 	}
 	
 	public List<User> getUsers(){
