@@ -19,26 +19,29 @@ import es.uvigo.esei.dgss.exercises.domain.User;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
-	
+
 	@EJB
-	private UserEJB userEJB;
-	
+	private UserEJB userEjb;
+
 	@Context
 	private UriInfo uriInfo;
-
+	
 	@POST
-	public Response createUser(User user){
-		this.userEJB.createUser(user);
-		
+	public Response createUser(User user) {
+		this.userEjb.createUser(user);
 		return 
-			Response.created(uriInfo.getAbsolutePathBuilder().path("/"+user.getLogin()).build()).build();
+				Response.created(
+					uriInfo.getAbsolutePathBuilder()
+						.path(user.getLogin()).build())
+					.build();
+
+		// 201 Created
+		// Location: http://localhost......./api/user/{login}
 	}
 	
 	@GET
 	@Path("{login}")
-	public Response getUserDetails(@PathParam("login") String login){
-		
-		return Response.ok(this.userEJB.findUserById(login)).build();
-		
+	public Response getUserDetails(@PathParam("login") String login) {
+		return Response.ok(this.userEjb.findUserById(login)).build();
 	}
 }

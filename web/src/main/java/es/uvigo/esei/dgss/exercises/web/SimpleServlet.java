@@ -192,12 +192,14 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.1
-			User u = facade.addUser(UUID.randomUUID().toString(), "name", "password", new byte[] {});
+			User u = facade.addUser(UUID.randomUUID().toString(), "task2_1", "password", new byte[] {});
+			
+			transaction.commit();
+
 			writer.println("User " + u.getLogin() + " created successfully<br><br>");
 
 			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
-			transaction.commit();
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {
@@ -221,6 +223,9 @@ public class SimpleServlet extends HttpServlet {
 		// work with Facade
 		// Task 2.1.EJB
 		User u = new User(UUID.randomUUID().toString());
+		u.setName("task2_1_EJB");
+		u.setPassword("password");
+		u.setPicture(new byte[]{});
 		userEJB.createUser(u);
 		writer.println("User " + u.getLogin() + " created successfully with EJB<br><br>");
 
@@ -237,13 +242,15 @@ public class SimpleServlet extends HttpServlet {
 			// Task 2.2
 			UserFriendship uf = facade.addFriendship(new User(UUID.randomUUID().toString()),
 					new User(UUID.randomUUID().toString()));
+			
+			transaction.commit();
+			
 			writer.println("User frienship 1" + uf.getUser1().getLogin() + " created successfully<br>");
 			writer.println("User frienship 2" + uf.getUser2().getLogin() + " created successfully<br>");
 			writer.println("Date" + uf.getDate() + " created successfully<br><br>");
 
 			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
-			transaction.commit();
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {
@@ -267,8 +274,19 @@ public class SimpleServlet extends HttpServlet {
 		// work with Facade
 
 		// Task 2.2.EJB
-		UserFriendship uf = userEJB.createFriendship(new User(UUID.randomUUID().toString()),
-				new User(UUID.randomUUID().toString()));
+		User u1 = new User(UUID.randomUUID().toString());
+		u1.setName("task2_2_EJB-1");
+		u1.setPassword("password");
+		u1.setPicture(new byte[]{});
+		userEJB.createUser(u1);
+		
+		User u2 = new User(UUID.randomUUID().toString());
+		u2.setName("task2_2_EJB-2");
+		u2.setPassword("password");
+		u2.setPicture(new byte[]{});
+		userEJB.createUser(u2);
+		
+		UserFriendship uf = userEJB.createFriendship(u1, u2);
 		writer.println("User frienship 1" + uf.getUser1().getLogin() + " created successfully<br>");
 		writer.println("User frienship 2" + uf.getUser2().getLogin() + " created successfully<br>");
 		writer.println("Date" + uf.getDate() + " created successfully<br><br>");
@@ -287,6 +305,8 @@ public class SimpleServlet extends HttpServlet {
 			User u = new User(UUID.randomUUID().toString());
 
 			List<User> friends = facade.getFriendships(u);
+			
+			transaction.commit();
 
 			writer.println("Friends of user " + u.getLogin() + ":<br><br>");
 			for (User friend : friends) {
@@ -295,7 +315,6 @@ public class SimpleServlet extends HttpServlet {
 
 			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
 
-			transaction.commit();
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {
@@ -343,6 +362,8 @@ public class SimpleServlet extends HttpServlet {
 			User u = new User(UUID.randomUUID().toString());
 
 			List<Post> posts = facade.getFriendsPosts(u);
+			
+			transaction.commit();
 
 			writer.println("Friends posts of user " + u.getLogin() + ":<br><br>");
 			for (Post post : posts) {
@@ -351,7 +372,6 @@ public class SimpleServlet extends HttpServlet {
 
 			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
 
-			transaction.commit();
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {

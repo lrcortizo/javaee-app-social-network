@@ -24,12 +24,11 @@ public class UserEJB {
 	private SessionContext ctx;
 
 	public User findUserById(String login) {
-		if(ctx.getCallerPrincipal().getName().equals("login")){
+		if (ctx.getCallerPrincipal().getName().equals(login)) {
 			return em.find(User.class, login);
 		} else {
-			throw new SecurityException("The authorized user is not "+login);
+			throw new SecurityException("The authenticated user is not "+login);
 		}
-		
 	}
 	
 	public List<User> getUsers(){
