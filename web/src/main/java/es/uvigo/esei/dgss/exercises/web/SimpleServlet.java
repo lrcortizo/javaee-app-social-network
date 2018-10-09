@@ -272,7 +272,8 @@ public class SimpleServlet extends HttpServlet {
 
 	private void task2_2_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
-
+		try {
+		transaction.begin();
 		// Task 2.2.EJB
 		User u1 = new User(UUID.randomUUID().toString());
 		u1.setName("task2_2_EJB-1");
@@ -292,7 +293,29 @@ public class SimpleServlet extends HttpServlet {
 		writer.println("Date" + uf.getDate() + " created successfully<br><br>");
 
 		writer.println("<a href='SimpleServlet'>Go to menu</a>");
-
+			transaction.commit();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RollbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HeuristicMixedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HeuristicRollbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void task2_3(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
