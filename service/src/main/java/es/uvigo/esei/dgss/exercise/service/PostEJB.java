@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,9 @@ public class PostEJB {
 	
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private StatisticsEJB statisticsEJB;
 	
 	public Post findPostById(int id) {
 		return em.find(Post.class, id);
@@ -79,16 +83,19 @@ public class PostEJB {
 	
 	public Video createVideo(Video video){
 		em.persist(video);
+		statisticsEJB.incrementPostCount();
 		return video;
 	}
 	
 	public Photo createPhoto(Photo photo){
 		em.persist(photo);
+		statisticsEJB.incrementPostCount();
 		return photo;
 	}
 	
 	public Link createLink(Link link){
 		em.persist(link);
+		statisticsEJB.incrementPostCount();
 		return link;
 	}
 	
@@ -118,6 +125,7 @@ public class PostEJB {
 	
 	public void removePost(Post post){
 		em.remove(post);
+		statisticsEJB.decrementPostCount();
 	}
 	
 	public Comment addComment(Post post, Comment comment){

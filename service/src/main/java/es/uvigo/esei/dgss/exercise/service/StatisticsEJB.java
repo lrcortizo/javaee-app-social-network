@@ -27,6 +27,14 @@ public class StatisticsEJB {
 		this.post_count+=1;
 	}
 	
+	public void decrementUserCount(){
+		this.user_count+=1;
+	}
+	
+	public void decrementPostCount(){
+		this.post_count+=1;
+	}
+	
 	@Lock(LockType.READ)
 	public int getUserCount() {
 		return user_count;

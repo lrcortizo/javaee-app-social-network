@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +20,9 @@ public class UserEJB {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private StatisticsEJB statisticsEJB;
 	
 	@Resource
 	private SessionContext ctx;
@@ -50,6 +54,7 @@ public class UserEJB {
 
 	public User createUser(User user) {
 		em.persist(user);
+		statisticsEJB.incrementUserCount();
 		return user;
 	}
 
@@ -64,6 +69,7 @@ public class UserEJB {
 
 	public void removeUser(User user) {
 		em.remove(user);
+		statisticsEJB.decrementUserCount();
 	}
 
 	public UserFriendship createFriendship(User user1, User user2) {
