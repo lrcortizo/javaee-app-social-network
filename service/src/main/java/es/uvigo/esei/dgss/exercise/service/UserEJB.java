@@ -40,7 +40,9 @@ public class UserEJB {
 	
 	public List<User> getFriends(User user){
 		List<User> toRet = new ArrayList<>();
-		toRet = em.createQuery("SELECT u.user2 FROM UserFriendship u WHERE u.user1 in :us", User.class)
+		toRet = em.createQuery("SELECT u FROM User u WHERE "
+				+ "u in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+				+ "u in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)", User.class)
 				.setParameter("us", user).getResultList();
 		
 		return toRet;
