@@ -77,7 +77,11 @@ public class UserEJB {
 		uf.setUser1(user1);
 		uf.setUser2(user2);
 		uf.setDate(new Date());
-		em.persist(uf);
+		List<User> l = getFriends(user1);
+		if(!l.contains(user2)){
+			em.persist(uf);
+		}
+		
 		return uf;
 	}
 	
