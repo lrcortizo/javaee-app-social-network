@@ -71,6 +71,12 @@ public class UserEJB {
 		em.remove(user);
 		statisticsEJB.decrementUserCount();
 	}
+	
+	public List<User> searchUsers(String filter) {
+		List<User> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT u FROM User u WHERE u.login LIKE :f OR u.name LIKE :f OR u.role LIKE :f", User.class).setParameter("f", "%"+filter+"%").getResultList();
+		return toRet;
+	}
 
 	public UserFriendship createFriendship(User user1, User user2) {
 		UserFriendship uf = new UserFriendship();

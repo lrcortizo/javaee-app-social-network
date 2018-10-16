@@ -17,6 +17,8 @@ public class User {
 	
 	private String name;
 	private String password;
+	private String role = "user";
+
 	private byte[] picture;
 	
 	@OneToMany(mappedBy = "user1", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -72,6 +74,15 @@ public class User {
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 
 	public Collection<UserFriendship> getFriends() {
 		return friends;
