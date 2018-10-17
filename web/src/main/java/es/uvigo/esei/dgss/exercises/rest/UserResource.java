@@ -2,8 +2,10 @@ package es.uvigo.esei.dgss.exercises.rest;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -26,6 +28,12 @@ public class UserResource {
 	@Context
 	private UriInfo uriInfo;
 	
+	@GET
+	@Path("{login}")
+	public Response getUserDetails(@PathParam("login") String login) {
+		return Response.ok(this.userEjb.findUserById(login)).build();
+	}
+	
 	@POST
 	public Response createUser(User user) {
 		this.userEjb.createUser(user);
@@ -39,9 +47,23 @@ public class UserResource {
 		// Location: http://localhost......./api/user/{login}
 	}
 	
-	@GET
+	@PUT
 	@Path("{login}")
-	public Response getUserDetails(@PathParam("login") String login) {
-		return Response.ok(this.userEjb.findUserById(login)).build();
+	public Response updateUser(@PathParam("login") String login, User user) {
+		this.userEjb.updateUser(user.getLogin(), user.getName(), user.getPassword(), user.getPicture());
+		return
+				Response.ok(
+						uriInfo.getAbsolutePathBuilder()
+							.path(user.getLogin()).build())
+						.build();
 	}
+	
+	@DELETE
+	@Path("{login}")
+	public Response deleteUser(@PathParam("login") String login) {
+		this.userEjb.deleteUser(login);
+		return
+				Response.ok().build();
+	}
+	
 }

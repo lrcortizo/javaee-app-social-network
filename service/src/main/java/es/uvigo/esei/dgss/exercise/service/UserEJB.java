@@ -72,6 +72,12 @@ public class UserEJB {
 		statisticsEJB.decrementUserCount();
 	}
 	
+	public void deleteUser(String login) {
+		User user = findUserById(login);
+		em.remove(user);
+		statisticsEJB.decrementUserCount();
+	}
+	
 	public List<User> searchUsers(String filter) {
 		List<User> toRet = new ArrayList<>();
 		toRet = em.createQuery("SELECT u FROM User u WHERE u.login LIKE :f OR u.name LIKE :f OR u.role LIKE :f", User.class).setParameter("f", "%"+filter+"%").getResultList();
