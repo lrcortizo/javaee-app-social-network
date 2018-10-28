@@ -24,6 +24,9 @@ public class UserEJB {
 	@EJB
 	private StatisticsEJB statisticsEJB;
 	
+	@EJB
+	private EmailServiceEJB emailEJB;
+	
 	@Resource
 	private SessionContext ctx;
 
@@ -105,6 +108,12 @@ public class UserEJB {
 	public Like addLike(User user, Like like){
 		user.addLike(like);
 		em.persist(user);
+		
+		String subject = "Like";
+		String body = user.getName() + " likes your post ";
+		
+		emailEJB.sendEmail(like.getPost().getUser(), subject, body);
+		
 		return like;
 	}
 	

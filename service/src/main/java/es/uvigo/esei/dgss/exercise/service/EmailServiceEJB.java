@@ -1,6 +1,7 @@
 package es.uvigo.esei.dgss.exercise.service;
 
 import javax.annotation.Resource;
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -19,7 +20,8 @@ public class EmailServiceEJB {
     @Resource(name = "java:jboss/mail/gmail")
     private Session session;
  
-    public void send(User u, String subject, String body) {
+    @Asynchronous
+    public void sendEmail(User u, String subject, String body) {
  
         try {
  
