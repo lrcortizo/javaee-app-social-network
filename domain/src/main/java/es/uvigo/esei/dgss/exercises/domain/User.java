@@ -18,6 +18,7 @@ public class User {
 	private String name;
 	private String password;
 	private String role = "user";
+	private String email;
 
 	private byte[] picture;
 	
@@ -83,6 +84,13 @@ public class User {
 		this.role = role;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Collection<UserFriendship> getFriends() {
 		return friends;

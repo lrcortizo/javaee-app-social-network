@@ -24,7 +24,7 @@ public class EmailServiceEJB {
         try {
  
             Message message = new MimeMessage(session);
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(u.email));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(u.getEmail()));
             message.setSubject(subject);
             message.setText(body);
  

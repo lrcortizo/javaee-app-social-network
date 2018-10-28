@@ -58,11 +58,12 @@ public class UserEJB {
 		return user;
 	}
 
-	public User updateUser(String login, String name, String password, byte[] picture) {
+	public User updateUser(String login, String name, String password, byte[] picture, String email) {
 		User user = findUserById(login);
 		user.setName(name);
 		user.setPassword(password);
 		user.setPicture(picture);
+		user.setEmail(email);
 		em.persist(user);
 		return user;
 	}

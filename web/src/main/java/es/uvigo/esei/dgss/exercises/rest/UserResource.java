@@ -50,7 +50,7 @@ public class UserResource {
 	@PUT
 	@Path("{login}")
 	public Response updateUser(@PathParam("login") String login, User user) {
-		this.userEjb.updateUser(user.getLogin(), user.getName(), user.getPassword(), user.getPicture());
+		this.userEjb.updateUser(user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getEmail());
 		return
 				Response.ok(
 						uriInfo.getAbsolutePathBuilder()
