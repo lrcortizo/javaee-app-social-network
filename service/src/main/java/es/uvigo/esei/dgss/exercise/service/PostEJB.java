@@ -123,8 +123,8 @@ public class PostEJB {
 		return link;
 	}
 	
-	public void removePost(Post post){
-		em.remove(post);
+	public void removePost(int id){
+		em.remove(findPostById(id));
 		statisticsEJB.decrementPostCount();
 	}
 	

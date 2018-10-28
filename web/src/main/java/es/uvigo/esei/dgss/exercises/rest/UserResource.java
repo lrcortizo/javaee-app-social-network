@@ -23,7 +23,7 @@ import es.uvigo.esei.dgss.exercises.domain.User;
 public class UserResource {
 
 	@EJB
-	private UserEJB userEjb;
+	private UserEJB userEJB;
 
 	@Context
 	private UriInfo uriInfo;
@@ -31,12 +31,12 @@ public class UserResource {
 	@GET
 	@Path("{login}")
 	public Response getUserDetails(@PathParam("login") String login) {
-		return Response.ok(this.userEjb.findUserById(login)).build();
+		return Response.ok(this.userEJB.findUserById(login)).build();
 	}
 	
 	@POST
 	public Response createUser(User user) {
-		this.userEjb.createUser(user);
+		this.userEJB.createUser(user);
 		return 
 				Response.created(
 					uriInfo.getAbsolutePathBuilder()
@@ -50,7 +50,7 @@ public class UserResource {
 	@PUT
 	@Path("{login}")
 	public Response updateUser(@PathParam("login") String login, User user) {
-		this.userEjb.updateUser(user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getEmail());
+		this.userEJB.updateUser(user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getEmail());
 		return
 				Response.ok(
 						uriInfo.getAbsolutePathBuilder()
@@ -61,7 +61,7 @@ public class UserResource {
 	@DELETE
 	@Path("{login}")
 	public Response deleteUser(@PathParam("login") String login) {
-		this.userEjb.deleteUser(login);
+		this.userEJB.deleteUser(login);
 		return
 				Response.ok().build();
 	}
