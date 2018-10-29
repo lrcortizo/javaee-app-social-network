@@ -34,9 +34,9 @@ public class UserController implements Serializable {
 	  date = Calendar.getInstance().getTime();
 	}
 	
-	public List<User> searchUsers() {
-		matching = userEJB.searchUsers(this.filter);
-		return matching;
+	public void searchUsers() {
+		this.matching = userEJB.searchUsers(this.filter);
+		
 	}
 	
 	public Date getDate() {
