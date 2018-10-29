@@ -37,18 +37,6 @@ public class PostResource {
 		return Response.ok(this.postEJB.findPostById(id)).build();
 	}
 	
-	@GET
-	@Path("{id}")
-	public Response getPhotoDetails(@PathParam("id") int id) {
-		return Response.ok(this.postEJB.findPostById(id)).build();
-	}
-	
-	@GET
-	@Path("{id}")
-	public Response getLinkDetails(@PathParam("id") int id) {
-		return Response.ok(this.postEJB.findPostById(id)).build();
-	}
-	
 	@POST
 	@Path("video")
 	public Response createVideo(Video video) {
