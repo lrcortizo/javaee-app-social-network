@@ -33,7 +33,7 @@ public class PostResource {
 	
 	@GET
 	@Path("{id}")
-	public Response getVideoDetails(@PathParam("id") int id) {
+	public Response getPostDetails(@PathParam("id") int id) {
 		return Response.ok(this.postEJB.findPostById(id)).build();
 	}
 	
@@ -71,7 +71,7 @@ public class PostResource {
 	}
 	
 	@PUT
-	@Path("{id}")
+	@Path("video/{id}")
 	public Response updateVideo(@PathParam("id") int id, Video video) {
 		this.postEJB.updateVideo(video.getId(), video.getDuration());
 		return
@@ -82,7 +82,7 @@ public class PostResource {
 	}
 	
 	@PUT
-	@Path("{id}")
+	@Path("photo/{id}")
 	public Response updatePhoto(@PathParam("id") int id, Photo photo) {
 		this.postEJB.updatePhoto(photo.getId(), photo.getContent());
 		return
@@ -93,7 +93,7 @@ public class PostResource {
 	}
 	
 	@PUT
-	@Path("{id}")
+	@Path("link/{id}")
 	public Response updateLink(@PathParam("id") int id, Link link) {
 		this.postEJB.updateLink(link.getId(), link.getUrl());
 		return
@@ -105,23 +105,7 @@ public class PostResource {
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteVideo(@PathParam("id") int id) {
-		this.postEJB.removePost(id);
-		return
-				Response.ok().build();
-	}
-	
-	@DELETE
-	@Path("{id}")
-	public Response deletePhoto(@PathParam("id") int id) {
-		this.postEJB.removePost(id);
-		return
-				Response.ok().build();
-	}
-	
-	@DELETE
-	@Path("{id}")
-	public Response deleteLink(@PathParam("id") int id) {
+	public Response deletePost(@PathParam("id") int id) {
 		this.postEJB.removePost(id);
 		return
 				Response.ok().build();
