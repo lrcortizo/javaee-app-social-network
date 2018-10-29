@@ -3,6 +3,7 @@ package es.uvigo.esei.dgss.exercises.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -92,12 +93,12 @@ public class SimpleServlet extends HttpServlet {
 
 		// task2_5
 		writer.println("<form method='POST'>"
-				+ "<button type='submit' name='task' value='2_5'>Task 2_5. Get commented posts of friends"
+				+ "<button type='submit' name='task' value='2_5'>Task 2_5. Get commented posts of friends after a given date"
 				+ "</button></form>");
 
 		// task2_5_EJB
 		writer.println("<form method='POST'>"
-				+ "<button type='submit' name='task' value='2_5_EJB'>Task 2_5_EJB. Get commented posts of friends with EJB"
+				+ "<button type='submit' name='task' value='2_5_EJB'>Task 2_5_EJB. Get commented posts of friends after a given date with EJB"
 				+ "</button></form>");
 
 		// task2_6
@@ -505,11 +506,19 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.5
-			// TODO
+			Date date = new Date();
+			User u = new User(UUID.randomUUID().toString());
 
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+			List<Post> posts = facade.getCommentedPostsByFriends(u, date);
 
 			transaction.commit();
+			
+			writer.println("Posts commented by friends of " + u.getLogin() + " after a given date:<br><br>");
+			for (Post post : posts) {
+				writer.println(post.getId() + "<br>");
+			}
+
+			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {

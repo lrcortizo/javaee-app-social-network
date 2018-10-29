@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import es.uvigo.esei.dgss.exercises.domain.Comment;
 import es.uvigo.esei.dgss.exercises.domain.Link;
 import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
@@ -59,7 +60,9 @@ public class Facade {
 		addFriendship(user, new User(UUID.randomUUID().toString()));
 		addFriendship(user, new User(UUID.randomUUID().toString()));
 
-		Query query = em.createQuery("SELECT u FROM UserFriendship u WHERE u.user1 in :us", UserFriendship.class)
+		Query query = em.createQuery("SELECT u FROM User u WHERE "
+				+ "u in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+				+ "u in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)", User.class)
 				.setParameter("us", user);
 		List<UserFriendship> friendships = (List<UserFriendship>) query.getResultList();
 		List<User> toRet = new ArrayList<>();
@@ -98,7 +101,9 @@ public class Facade {
 		em.persist(post5);
 
 		Query query = em
-				.createQuery("SELECT p FROM Post p, UserFriendship uf WHERE uf.user1 = :us AND p.user = uf.user2)",
+				.createQuery("SELECT p FROM Post p, UserFriendship uf WHERE "
+						+ "(uf.user1 = :us AND p.user = uf.user2) OR "
+						+ "uf.user2 = :us AND p.user = uf.user1)",
 						Post.class)
 				.setParameter("us", user);
 
@@ -109,7 +114,64 @@ public class Facade {
 	// Exercise 1, Task 2.5
 	// TODO
 	public List<Post> getCommentedPostsByFriends(User user, Date date) {
-		List<Post> posts = new ArrayList<>();
+		
+		// Creating friends
+		User prueba1 = new User(UUID.randomUUID().toString());
+		addFriendship(user, prueba1);
+		User prueba2 = new User(UUID.randomUUID().toString());
+		addFriendship(user, prueba2);
+		User prueba3 = new User(UUID.randomUUID().toString());
+		em.persist(prueba3);
+		
+		//Creating comments
+		Comment comment1 = new Comment();
+		comment1.setComment("Comment 1");
+		comment1.setUser(prueba1);
+		em.persist(comment1);
+		Comment comment2 = new Comment();
+		comment2.setComment("Comment 2");
+		comment2.setUser(prueba2);
+		em.persist(comment2);
+		Comment comment3 = new Comment();
+		comment3.setComment("Comment 3");
+		comment3.setUser(prueba3);
+		em.persist(comment3);
+
+		// Creating posts
+		Post post1 = new Link();
+		post1.setUser(user);
+		post1.addComment(comment1);
+		em.persist(post1);
+		Post post2 = new Video();
+		post2.setUser(user);
+		post1.addComment(comment2);
+		em.persist(post2);
+		Post post3 = new Photo();
+		post3.setUser(user);
+		post1.addComment(comment1);
+		post1.addComment(comment2);
+		em.persist(post3);
+		Post post4 = new Photo();
+		post4.setUser(user);
+		post1.addComment(comment3);
+		em.persist(post4);
+		Post post5 = new Video();
+		post1.addComment(comment1);
+		post1.addComment(comment3);
+		post5.setUser(user);
+		em.persist(post5);
+		
+		Query query = em
+				.createQuery("SELECT p FROM Post p WHERE "
+						+ "p in (SELECT c.post FROM Comment c WHERE "
+						+ "c.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+						+ "c.user in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)) AND "
+						+ "p.date > :dat",
+						Post.class)
+				.setParameter("us", user).setParameter("dat", date);
+		
+		List<Post> posts = (List<Post>) query.getResultList();
+		
 		return posts;
 	}
 
