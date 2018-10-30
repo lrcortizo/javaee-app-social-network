@@ -224,14 +224,14 @@ public class Facade {
 
 	// Exercise 1, Task 2.7
 	// TODO
-	public List<Post> getPicturesUserLikes(User user) {
+	public List<Photo> getPicturesUserLikes(User user) {
 		
 		//Creating Photos
-		Post photo1 = new Photo();
+		Photo photo1 = new Photo();
 		em.persist(photo1);
-		Post photo2 = new Photo();
+		Photo photo2 = new Photo();
 		em.persist(photo2);
-		Post photo3 = new Photo();
+		Photo photo3 = new Photo();
 		em.persist(photo3);
 		
 		Like like1 = new Like();
@@ -248,11 +248,11 @@ public class Facade {
 		
 		
 		Query query = em
-				.createQuery("SELECT p FROM Post p WHERE "
-						+ "p in (SELECT l.post FROM Like l WHERE l.user = :us)", Post.class)
+				.createQuery("SELECT p FROM Photo p WHERE "
+						+ "p in (SELECT l.post FROM Like l WHERE l.user = :us)", Photo.class)
 				.setParameter("us", user);
 		
-		List<Post> toRet = (List<Post>) query.getResultList();
+		List<Photo> toRet = (List<Photo>) query.getResultList();
 		
 		return toRet;
 	}

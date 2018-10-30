@@ -704,13 +704,13 @@ public class SimpleServlet extends HttpServlet {
 			// Task 2.7
 			User u = new User(UUID.randomUUID().toString());
 
-			List<Post> posts = facade.getPicturesUserLikes(u);
+			List<Photo> photos = facade.getPicturesUserLikes(u);
 
 			transaction.commit();
 			
 			writer.println("Give me all the pictures "+ u.getLogin() +" likes:<br><br>");
-			for (Post post : posts) {
-				writer.println(post.getId() + "<br>");
+			for (Photo photo : photos) {
+				writer.println(photo.getId() + "<br>");
 			}
 
 			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");

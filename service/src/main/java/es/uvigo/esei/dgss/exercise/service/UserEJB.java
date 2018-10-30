@@ -102,6 +102,7 @@ public class UserEJB {
 		uf.setUser1(user1);
 		uf.setUser2(user2);
 		uf.setDate(new Date());
+		uf.setAccepted(false);
 		List<User> l = getFriends(user1);
 		if(!l.contains(user2)){
 			em.persist(uf);
@@ -130,4 +131,12 @@ public class UserEJB {
 		em.remove(like);
 	}
 
+	public UserFriendship requestFriendship(String login) {
+		User user = findUserById(ctx.getCallerPrincipal().getName());
+		User friend = em.find(User.class, login);
+		
+		return createFriendship(user, friend);
+		
+	}
+	
 }
