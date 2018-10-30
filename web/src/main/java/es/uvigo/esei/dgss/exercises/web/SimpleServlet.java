@@ -24,6 +24,7 @@ import javax.transaction.UserTransaction;
 
 import es.uvigo.esei.dgss.exercise.service.PostEJB;
 import es.uvigo.esei.dgss.exercise.service.UserEJB;
+import es.uvigo.esei.dgss.exercises.domain.Comment;
 import es.uvigo.esei.dgss.exercises.domain.Link;
 import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
@@ -540,11 +541,87 @@ public class SimpleServlet extends HttpServlet {
 
 	private void task2_5_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
-
-		// Task 2.5.EJB
-		// TODO
-
-		writer.println("<a href='SimpleServlet'>Go to menu</a>");
+		try {
+			transaction.begin();
+			
+			// Task 2.5.EJB
+			// Creating friends
+			User user = new User(UUID.randomUUID().toString());
+			User prueba1 = new User(UUID.randomUUID().toString());
+			userEJB.createFriendship(user, prueba1);
+			User prueba2 = new User(UUID.randomUUID().toString());
+			userEJB.createFriendship(user, prueba2);
+			User prueba3 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba3);
+			
+			//Creating comments
+			Comment comment1 = new Comment();
+			comment1.setComment("Comment 1");
+			comment1.setUser(prueba1);
+			comment1.setDate(new Date());
+			Comment comment2 = new Comment();
+			comment2.setComment("Comment 2");
+			comment2.setUser(prueba2);
+			comment2.setDate(new Date());
+			Comment comment3 = new Comment();
+			comment3.setComment("Comment 3");
+			comment3.setUser(prueba3);
+			comment3.setDate(new Date());
+	
+			// Creating posts
+			Link post1 = new Link();
+			post1.setUser(user);
+			postEJB.createLink(post1);
+			postEJB.addComment(post1, comment1);
+			
+			Video post2 = new Video();
+			post2.setUser(user);
+			postEJB.createVideo(post2);
+			postEJB.addComment(post2, comment2);
+			
+			Photo post3 = new Photo();
+			post3.setUser(user);
+			postEJB.createPhoto(post3);
+			postEJB.addComment(post3, comment1);
+			postEJB.addComment(post3, comment2);
+			
+			Photo post4 = new Photo();
+			post4.setUser(user);
+			postEJB.createPhoto(post4);
+			postEJB.addComment(post4, comment3);
+			
+			Video post5 = new Video();
+			post5.setUser(user);
+			postEJB.createVideo(post5);
+			postEJB.addComment(post5, comment1);
+			postEJB.addComment(post5, comment3);
+			
+			List<Post> posts = postEJB.getCommentedPostsByFriends(user, new Date());
+			
+			transaction.commit();
+			
+			writer.println("Posts commented by friends of " + user.getLogin() + " after a given date:<br><br>");
+			for (Post post : posts) {
+				writer.println(post.getId() + "<br>");
+			}
+	
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+		
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
+			try {
+				transaction.rollback();
+			} catch (IllegalStateException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 
 	}
 
@@ -625,11 +702,19 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.7
-			// TODO
+			User u = new User(UUID.randomUUID().toString());
 
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+			List<Post> posts = facade.getPicturesUserLikes(u);
 
 			transaction.commit();
+			
+			writer.println("Give me all the pictures "+ u.getLogin() +" likes:<br><br>");
+			for (Post post : posts) {
+				writer.println(post.getId() + "<br>");
+			}
+
+			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
+
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {

@@ -29,13 +29,22 @@ public class UserEJB {
 	
 	@Resource
 	private SessionContext ctx;
-
-	public User findUserById(String login) {
+	
+	public boolean isAuthenticated(String login) {
 		if (ctx.getCallerPrincipal().getName().equals(login)) {
-			return em.find(User.class, login);
+			return true;
 		} else {
 			throw new SecurityException("The authenticated user is not "+login);
 		}
+	}
+
+	public User findUserById(String login) {
+		User toRet = null;
+		if (isAuthenticated(login)) {
+			toRet = em.find(User.class, login);
+			return toRet;
+		} 
+		return toRet;
 	}
 	
 	public List<User> getUsers(){

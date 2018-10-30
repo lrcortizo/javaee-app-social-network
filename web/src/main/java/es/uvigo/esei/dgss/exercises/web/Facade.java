@@ -128,14 +128,17 @@ public class Facade {
 		Comment comment1 = new Comment();
 		comment1.setComment("Comment 1");
 		comment1.setUser(prueba1);
+		comment1.setDate(new Date());
 		em.persist(comment1);
 		Comment comment2 = new Comment();
 		comment2.setComment("Comment 2");
 		comment2.setUser(prueba2);
+		comment2.setDate(new Date());
 		em.persist(comment2);
 		Comment comment3 = new Comment();
 		comment3.setComment("Comment 3");
 		comment3.setUser(prueba3);
+		comment3.setDate(new Date());
 		em.persist(comment3);
 
 		// Creating posts
@@ -165,9 +168,9 @@ public class Facade {
 		Query query = em
 				.createQuery("SELECT p FROM Post p WHERE "
 						+ "p in (SELECT c.post FROM Comment c WHERE "
-						+ "c.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+						+ "(c.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
 						+ "c.user in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)) AND "
-						+ "p.date > :dat",
+						+ "c.date > :dat)",
 						Post.class)
 				.setParameter("us", user).setParameter("dat", date);
 		
@@ -221,8 +224,36 @@ public class Facade {
 
 	// Exercise 1, Task 2.7
 	// TODO
-	public List<Photo> getPicturesUserLikes(User user) {
-		List<Photo> toRet = new ArrayList<>();
+	public List<Post> getPicturesUserLikes(User user) {
+		
+		//Creating Photos
+		Post photo1 = new Photo();
+		em.persist(photo1);
+		Post photo2 = new Photo();
+		em.persist(photo2);
+		Post photo3 = new Photo();
+		em.persist(photo3);
+		
+		Like like1 = new Like();
+		like1.setUser(user);
+		like1.setPost(photo1);
+		em.persist(like1);
+		
+		Like like2 = new Like();
+		like2.setUser(user);
+		like2.setPost(photo2);
+		em.persist(like2);
+		
+		//Creating Likes
+		
+		
+		Query query = em
+				.createQuery("SELECT p FROM Post p WHERE "
+						+ "p in (SELECT l.post FROM Like l WHERE l.user = :us)", Post.class)
+				.setParameter("us", user);
+		
+		List<Post> toRet = (List<Post>) query.getResultList();
+		
 		return toRet;
 	}
 

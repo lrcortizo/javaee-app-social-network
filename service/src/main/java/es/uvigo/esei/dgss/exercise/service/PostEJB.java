@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import es.uvigo.esei.dgss.exercises.domain.Comment;
 import es.uvigo.esei.dgss.exercises.domain.Link;
@@ -144,6 +145,20 @@ public class PostEJB {
 	
 	public void removeComment(Comment comment){
 		em.remove(comment);
+	}
+	
+	public List<Post> getCommentedPostsByFriends(User user, Date date) {
+		Query query = em
+				.createQuery("SELECT p FROM Post p WHERE "
+						+ "p in (SELECT c.post FROM Comment c WHERE "
+						+ "(c.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+						+ "c.user in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)) AND "
+						+ "c.date > :dat)",
+						Post.class)
+				.setParameter("us", user).setParameter("dat", date);
+		
+		List<Post> posts = (List<Post>) query.getResultList();
+		return posts;
 	}
 }
 
