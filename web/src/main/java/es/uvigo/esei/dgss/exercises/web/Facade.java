@@ -144,20 +144,20 @@ public class Facade {
 		em.persist(post1);
 		Post post2 = new Video();
 		post2.setUser(user);
-		post1.addComment(comment2);
+		post2.addComment(comment2);
 		em.persist(post2);
 		Post post3 = new Photo();
 		post3.setUser(user);
-		post1.addComment(comment1);
-		post1.addComment(comment2);
+		post3.addComment(comment1);
+		post3.addComment(comment2);
 		em.persist(post3);
 		Post post4 = new Photo();
 		post4.setUser(user);
-		post1.addComment(comment3);
+		post4.addComment(comment3);
 		em.persist(post4);
 		Post post5 = new Video();
-		post1.addComment(comment1);
-		post1.addComment(comment3);
+		post5.addComment(comment1);
+		post5.addComment(comment3);
 		post5.setUser(user);
 		em.persist(post5);
 		
