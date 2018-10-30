@@ -555,11 +555,19 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.6
-			// TODO
+			User u = new User(UUID.randomUUID().toString());
+			Post p = new Video();
 
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+			List<User> users = facade.unnamed(u, p);
 
 			transaction.commit();
+			
+			writer.println("Get the users which are friends of " + u.getLogin() + " who like " + p.getId() + ":<br><br>");
+			for (User user : users) {
+				writer.println(user.getLogin() + "<br>");
+			}
+
+			writer.println("<br><a href='SimpleServlet'>Go to menu</a>");
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {

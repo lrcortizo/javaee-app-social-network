@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import es.uvigo.esei.dgss.exercises.domain.Comment;
+import es.uvigo.esei.dgss.exercises.domain.Like;
 import es.uvigo.esei.dgss.exercises.domain.Link;
 import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
@@ -177,8 +178,44 @@ public class Facade {
 
 	// Exercise 1, Task 2.6
 	// TODO
-	public List<User> Unnamed(User user, Post post) {
-		List<User> toRet = new ArrayList<>();
+	public List<User> unnamed(User user, Post post) {
+		
+		// Creating friends
+				User prueba1 = new User(UUID.randomUUID().toString());
+				addFriendship(user, prueba1);
+				User prueba2 = new User(UUID.randomUUID().toString());
+				addFriendship(user, prueba2);
+				User prueba3 = new User(UUID.randomUUID().toString());
+				em.persist(prueba3);
+				User prueba4 = new User(UUID.randomUUID().toString());
+				addFriendship(user, prueba4);
+				
+
+				// Creating likes
+				Like like1 = new Like();
+				like1.setUser(prueba1);
+				like1.setPost(post);
+				em.persist(like1);
+				
+				Like like2 = new Like();
+				like2.setUser(prueba2);
+				like2.setPost(post);
+				em.persist(like2);
+				
+				Like like3 = new Like();
+				like3.setUser(prueba3);
+				like3.setPost(post);
+				em.persist(like3);
+		
+				Query query = em
+						.createQuery("SELECT u FROM User u WHERE "
+								+ "(u in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+								+ "u in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)) AND "
+								+ "u in (SELECT l.user from Like l WHERE l.post = :pos)", User.class)
+						.setParameter("us", user).setParameter("pos", post);
+				
+				List<User> toRet = (List<User>) query.getResultList();
+				
 		return toRet;
 	}
 
