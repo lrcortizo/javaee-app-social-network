@@ -106,7 +106,7 @@ public class PostResource {
 	@DELETE
 	@Path("{id}")
 	public Response deletePost(@PathParam("id") int id) {
-		this.postEJB.removePost(id);
+		this.postEJB.deletePost(id);
 		return
 				Response.ok().build();
 	}

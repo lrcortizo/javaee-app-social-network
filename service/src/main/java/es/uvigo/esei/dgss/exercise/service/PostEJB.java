@@ -26,8 +26,15 @@ public class PostEJB {
 	@EJB
 	private StatisticsEJB statisticsEJB;
 	
+	@EJB
+	private UserEJB userEJB;
+	
 	public Post findPostById(int id) {
-		return em.find(Post.class, id);
+		Post toRet = em.find(Post.class, id);
+		if(userEJB.isAuthenticated(toRet.getUser().getLogin())) {
+			return toRet;
+		} 
+		return null;
 	}
 	
 	public Comment findCommentById(int id) {
@@ -124,8 +131,14 @@ public class PostEJB {
 		return link;
 	}
 	
-	public void removePost(int id){
-		em.remove(findPostById(id));
+	public void removePost(Post post) {
+		em.remove(post);
+		statisticsEJB.decrementPostCount();
+	}
+	
+	public void deletePost(int id){
+		Post post = findPostById(id);
+		em.remove(post);
 		statisticsEJB.decrementPostCount();
 	}
 	

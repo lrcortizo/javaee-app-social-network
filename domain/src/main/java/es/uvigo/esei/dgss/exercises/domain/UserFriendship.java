@@ -19,6 +19,8 @@ public class UserFriendship {
 	private User user2;
 
 	private Date date;
+	
+	private boolean accepted;
 
 	public UserFriendship() {
 	}
@@ -45,6 +47,14 @@ public class UserFriendship {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public boolean isAccepted() {
+		return accepted;
+	}
+
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
 	}
 
 }

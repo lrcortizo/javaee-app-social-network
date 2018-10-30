@@ -66,4 +66,6 @@ public class UserResource {
 				Response.ok().build();
 	}
 	
+	
+	
 }
