@@ -173,5 +173,16 @@ public class PostEJB {
 		List<Post> posts = (List<Post>) query.getResultList();
 		return posts;
 	}
+	
+	public List<Photo> getPicturesUserLikes(User user) {
+		Query query = em
+				.createQuery("SELECT p FROM Photo p WHERE "
+						+ "p in (SELECT l.post FROM Like l WHERE l.user = :us)", Photo.class)
+				.setParameter("us", user);
+		
+		List<Photo> toRet = (List<Photo>) query.getResultList();
+		
+		return toRet;
+	}
 }
 

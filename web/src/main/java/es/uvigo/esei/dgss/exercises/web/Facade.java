@@ -181,7 +181,7 @@ public class Facade {
 
 	// Exercise 1, Task 2.6
 	// TODO
-	public List<User> unnamed(User user, Post post) {
+	public List<User> getUsersFriendsOfUserWhoLikesPost(User user, Post post) {
 		
 		// Creating friends
 				User prueba1 = new User(UUID.randomUUID().toString());
@@ -234,6 +234,7 @@ public class Facade {
 		Photo photo3 = new Photo();
 		em.persist(photo3);
 		
+		//Creating Likes
 		Like like1 = new Like();
 		like1.setUser(user);
 		like1.setPost(photo1);
@@ -243,8 +244,6 @@ public class Facade {
 		like2.setUser(user);
 		like2.setPost(photo2);
 		em.persist(like2);
-		
-		//Creating Likes
 		
 		
 		Query query = em

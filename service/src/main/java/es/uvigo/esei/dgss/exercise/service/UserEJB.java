@@ -10,8 +10,10 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import es.uvigo.esei.dgss.exercises.domain.Like;
+import es.uvigo.esei.dgss.exercises.domain.Post;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
 
@@ -129,6 +131,19 @@ public class UserEJB {
 	
 	public void removeLike(Like like){
 		em.remove(like);
+	}
+	
+	public List<User> getUsersFriendsOfUserWhoLikesPost(User user, Post post){
+		Query query = em
+				.createQuery("SELECT u FROM User u WHERE "
+						+ "(u in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+						+ "u in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)) AND "
+						+ "u in (SELECT l.user from Like l WHERE l.post = :pos)", User.class)
+				.setParameter("us", user).setParameter("pos", post);
+		
+		List<User> toRet = (List<User>) query.getResultList();
+		
+		return toRet;
 	}
 
 	public UserFriendship requestFriendship(String login) {

@@ -25,6 +25,7 @@ import javax.transaction.UserTransaction;
 import es.uvigo.esei.dgss.exercise.service.PostEJB;
 import es.uvigo.esei.dgss.exercise.service.UserEJB;
 import es.uvigo.esei.dgss.exercises.domain.Comment;
+import es.uvigo.esei.dgss.exercises.domain.Like;
 import es.uvigo.esei.dgss.exercises.domain.Link;
 import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
@@ -635,7 +636,7 @@ public class SimpleServlet extends HttpServlet {
 			User u = new User(UUID.randomUUID().toString());
 			Post p = new Video();
 
-			List<User> users = facade.unnamed(u, p);
+			List<User> users = facade.getUsersFriendsOfUserWhoLikesPost(u, p);
 
 			transaction.commit();
 			
@@ -671,11 +672,48 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.6.EJB
-			// TODO
+			
+			//Given user and post
+			User user = new User(UUID.randomUUID().toString());
+			Post post = new Video();
+			
+			// Creating friends
+			User prueba1 = new User(UUID.randomUUID().toString());
+			userEJB.createFriendship(user, prueba1);
+			User prueba2 = new User(UUID.randomUUID().toString());
+			userEJB.createFriendship(user, prueba2);
+			User prueba3 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba3);
+			User prueba4 = new User(UUID.randomUUID().toString());
+			userEJB.createFriendship(user, prueba4);
+			
 
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+			// Creating likes
+			Like like1 = new Like();
+			like1.setUser(prueba1);
+			like1.setPost(post);
+			userEJB.addLike(prueba1, like1);
+			
+			Like like2 = new Like();
+			like2.setUser(prueba2);
+			like2.setPost(post);
+			userEJB.addLike(prueba2, like2);
+			
+			Like like3 = new Like();
+			like3.setUser(prueba3);
+			like3.setPost(post);
+			userEJB.addLike(prueba3, like3);
+
+			List <User> users = userEJB.getUsersFriendsOfUserWhoLikesPost(user, post);
 
 			transaction.commit();
+			
+			writer.println("Get the users which are friends of " + user.getLogin() + " who like " + post.getId() + ":<br><br>");
+			for (User u : users) {
+				writer.println(u.getLogin() + "<br>");
+			}
+			
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {
@@ -741,11 +779,39 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.7.EJB
-			// TODO
-
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
+			
+			//Given User
+			User user = new User(UUID.randomUUID().toString());
+			
+			//Creating Photos
+			Photo photo1 = new Photo();
+			postEJB.createPhoto(photo1);
+			Photo photo2 = new Photo();
+			postEJB.createPhoto(photo2);
+			Photo photo3 = new Photo();
+			postEJB.createPhoto(photo3);
+			
+			//Creating Likes
+			Like like1 = new Like();
+			like1.setUser(user);
+			like1.setPost(photo1);
+			userEJB.addLike(user, like1);
+			
+			Like like2 = new Like();
+			like2.setUser(user);
+			like2.setPost(photo2);
+			userEJB.addLike(user, like2);
+			
+			List<Photo> photos = postEJB.getPicturesUserLikes(user);
 
 			transaction.commit();
+			
+			writer.println("Give me all the pictures "+ user.getLogin() +" likes:<br><br>");
+			for (Photo photo : photos) {
+				writer.println(photo.getId() + "<br>");
+			}
+			
+			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {
