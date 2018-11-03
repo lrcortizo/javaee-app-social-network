@@ -65,11 +65,7 @@ public class Facade {
 				+ "u in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
 				+ "u in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)", User.class)
 				.setParameter("us", user);
-		List<UserFriendship> friendships = (List<UserFriendship>) query.getResultList();
-		List<User> toRet = new ArrayList<>();
-		for (UserFriendship uf : friendships) {
-			toRet.add(uf.getUser2());
-		}
+		List<User> toRet = (List<User>) query.getResultList();
 		return toRet;
 	}
 
