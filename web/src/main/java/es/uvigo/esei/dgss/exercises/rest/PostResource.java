@@ -110,5 +110,28 @@ public class PostResource {
 		return
 				Response.ok().build();
 	}
-
+	
+	@GET
+	@Path("wall")
+	public Response getMyWallPosts() {
+		this.postEJB.getMyWallPosts();
+		return
+				Response.ok().build();
+	}
+	
+	@GET
+	@Path("post")
+	public Response getMyPosts() {
+		this.postEJB.getMyPosts();
+		return
+				Response.ok().build();
+	}
+	
+	@POST
+	@Path("post/{id}")
+	public Response giveLike(@PathParam("id") int id) {
+		this.postEJB.giveLike(id);
+		return
+				Response.ok().build();
+	}
 }

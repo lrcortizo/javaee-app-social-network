@@ -123,10 +123,6 @@ public class SimpleServlet extends HttpServlet {
 				+ "<button type='submit' name='task' value='2_7_EJB'>Task 2_7_EJB. Get pictures that user likes with EJB"
 				+ "</button></form>");
 
-		// task2_8
-		writer.println("<form method='POST'>"
-				+ "<button type='submit' name='task' value='2_8'>Task 2_8. Get potential friends" + "</button></form>");
-
 		// task2_8_EJB
 		writer.println("<form method='POST'>"
 				+ "<button type='submit' name='task' value='2_8_EJB'>Task 2_8_EJB. Get potential friends with EJB"
@@ -182,9 +178,6 @@ public class SimpleServlet extends HttpServlet {
 		}
 		if (req.getParameter("task").equals("2_7_EJB")) {
 			task2_7_EJB(req, resp, writer);
-		}
-		if (req.getParameter("task").equals("2_8")) {
-			task2_8(req, resp, writer);
 		}
 		if (req.getParameter("task").equals("2_8_EJB")) {
 			task2_8_EJB(req, resp, writer);
@@ -692,17 +685,17 @@ public class SimpleServlet extends HttpServlet {
 			Like like1 = new Like();
 			like1.setUser(prueba1);
 			like1.setPost(post);
-			userEJB.addLike(prueba1, like1);
+			userEJB.addLike(like1);
 			
 			Like like2 = new Like();
 			like2.setUser(prueba2);
 			like2.setPost(post);
-			userEJB.addLike(prueba2, like2);
+			userEJB.addLike(like2);
 			
 			Like like3 = new Like();
 			like3.setUser(prueba3);
 			like3.setPost(post);
-			userEJB.addLike(prueba3, like3);
+			userEJB.addLike(like3);
 
 			List <User> users = userEJB.getUsersFriendsOfUserWhoLikesPost(user, post);
 
@@ -795,12 +788,12 @@ public class SimpleServlet extends HttpServlet {
 			Like like1 = new Like();
 			like1.setUser(user);
 			like1.setPost(photo1);
-			userEJB.addLike(user, like1);
+			userEJB.addLike(like1);
 			
 			Like like2 = new Like();
 			like2.setUser(user);
 			like2.setPost(photo2);
-			userEJB.addLike(user, like2);
+			userEJB.addLike(like2);
 			
 			List<Photo> photos = postEJB.getPicturesUserLikes(user);
 
@@ -831,37 +824,6 @@ public class SimpleServlet extends HttpServlet {
 
 	}
 
-	private void task2_8(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
-		// work with Facade
-
-		try {
-			transaction.begin();
-
-			// Task 2.8
-			// TODO
-
-			writer.println("<a href='SimpleServlet'>Go to menu</a>");
-
-			transaction.commit();
-
-		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
-				| HeuristicMixedException | HeuristicRollbackException e) {
-			try {
-				transaction.rollback();
-			} catch (IllegalStateException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SystemException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-
-	}
-
 	private void task2_8_EJB(HttpServletRequest req, HttpServletResponse resp, PrintWriter writer) throws IOException {
 		// work with Facade
 
@@ -869,11 +831,38 @@ public class SimpleServlet extends HttpServlet {
 			transaction.begin();
 
 			// Task 2.8.EJB
-			// TODO
+			
+			User user = new User(UUID.randomUUID().toString());
+			
+			// Creating friends
+			User prueba1 = new User(UUID.randomUUID().toString());
+			userEJB.createFriendship(user, prueba1);
+			User prueba2 = new User(UUID.randomUUID().toString());
+			userEJB.createFriendship(user, prueba2);
+			User prueba3 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba3);
+			User prueba4 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba4);
+			User prueba5 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba5);
+			User prueba6 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba6);
+			User prueba7 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba7);
+			User prueba8 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba8);
+			
+			List <User> users = userEJB.getPotentialFriends(user);
+			
+			transaction.commit();
+			
+			writer.println("Potential friends of "+ user.getLogin() +":<br><br>");
+			for (User u : users) {
+				writer.println(u.getLogin() + "<br>");
+			}
 
 			writer.println("<a href='SimpleServlet'>Go to menu</a>");
 
-			transaction.commit();
 
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {

@@ -67,9 +67,25 @@ public class UserResource {
 	}
 	
 	@POST
-	@Path("friend/{login}")
+	@Path("friends/{login}")
 	public Response requestFriendship(@PathParam("login") String login) {
 		this.userEJB.requestFriendship(login);
+		return
+				Response.ok().build();
+	}
+	
+	@GET
+	@Path("friends")
+	public Response getFriendshipRequests() {
+		this.userEJB.getFrienshipRequests();
+		return
+				Response.ok().build();
+	}
+	
+	@PUT
+	@Path("friends/{login}")
+	public Response acceptFriendship(@PathParam("login") String login) {
+		this.userEJB.acceptFriendship(login);
 		return
 				Response.ok().build();
 	}

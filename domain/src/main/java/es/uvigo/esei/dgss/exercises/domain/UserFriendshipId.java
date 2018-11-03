@@ -9,6 +9,12 @@ public class UserFriendshipId implements Serializable {
 
 	public UserFriendshipId() {
 	}
+	
+	public UserFriendshipId(String user1, String user2) {
+		this.user1 = user1;
+		this.user2 = user2;
+	}
+
 
 	public String getUser1() {
 		return user1;

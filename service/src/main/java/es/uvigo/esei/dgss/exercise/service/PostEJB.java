@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import es.uvigo.esei.dgss.exercises.domain.Comment;
+import es.uvigo.esei.dgss.exercises.domain.Like;
 import es.uvigo.esei.dgss.exercises.domain.Link;
 import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
@@ -28,6 +31,9 @@ public class PostEJB {
 	
 	@EJB
 	private UserEJB userEJB;
+	
+	@Resource
+	private SessionContext ctx;
 	
 	public Post findPostById(int id) {
 		Post toRet = em.find(Post.class, id);
@@ -90,18 +96,21 @@ public class PostEJB {
 	}
 	
 	public Video createVideo(Video video){
+		video.setUser(userEJB.findUserById(ctx.getCallerPrincipal().getName()));
 		em.persist(video);
 		statisticsEJB.incrementPostCount();
 		return video;
 	}
 	
 	public Photo createPhoto(Photo photo){
+		photo.setUser(userEJB.findUserById(ctx.getCallerPrincipal().getName()));
 		em.persist(photo);
 		statisticsEJB.incrementPostCount();
 		return photo;
 	}
 	
 	public Link createLink(Link link){
+		link.setUser(userEJB.findUserById(ctx.getCallerPrincipal().getName()));
 		em.persist(link);
 		statisticsEJB.incrementPostCount();
 		return link;
@@ -183,6 +192,36 @@ public class PostEJB {
 		List<Photo> toRet = (List<Photo>) query.getResultList();
 		
 		return toRet;
+	}
+	
+	public List<Post> getMyWallPosts() {
+		User user = userEJB.findUserById(ctx.getCallerPrincipal().getName());
+		
+		List <Post> toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us OR "
+				+ "(p.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
+				+ "p.user in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us))", Post.class)
+				.setParameter("us", user).getResultList();
+		
+		return toRet;
+	}
+	
+	public List<Post> getMyPosts() {
+		User user = userEJB.findUserById(ctx.getCallerPrincipal().getName());
+		
+		List <Post> toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us", Post.class)
+				.setParameter("us", user).getResultList();
+		
+		return toRet;
+	}
+	
+	public Like giveLike(int id) {
+		Post post = findPostById(id);
+		User user = userEJB.findUserById(ctx.getCallerPrincipal().getName());
+		Like like = new Like();
+		like.setUser(user);
+		like.setPost(post);
+		
+		return userEJB.addLike(like);
 	}
 }
 

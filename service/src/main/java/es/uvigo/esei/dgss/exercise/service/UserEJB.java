@@ -16,6 +16,7 @@ import es.uvigo.esei.dgss.exercises.domain.Like;
 import es.uvigo.esei.dgss.exercises.domain.Post;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.UserFriendship;
+import es.uvigo.esei.dgss.exercises.domain.UserFriendshipId;
 
 @Stateless
 public class UserEJB {
@@ -117,7 +118,8 @@ public class UserEJB {
 		em.remove(uf);
 	}
 	
-	public Like addLike(User user, Like like){
+	public Like addLike(Like like){
+		User user = like.getUser();
 		user.addLike(like);
 		em.persist(user);
 		
@@ -145,6 +147,42 @@ public class UserEJB {
 		
 		return toRet;
 	}
+	
+	public List<User> getPotentialFriends(User user){
+		List<User> toRet = new ArrayList<User>();
+		
+		//Get all users
+		List <User> allUsers = getUsers();
+		
+		//Count common friends
+		for (User u : allUsers) {
+			if(!isFriend(user, u)) {
+				if (getCommonFriends(user, u).size() >= 5) {
+					toRet.add(u);
+				}
+			}
+		}
+		
+		return toRet;
+	}
+	
+	public boolean isFriend(User user1, User user2) {
+		List<User> l = getFriends(user1);
+		if(l.contains(user2)){
+			return true;
+		}
+		return false;
+	}
+	
+	public List<User> getCommonFriends(User user1, User user2) {
+		List<User> friends1 = getFriends(user1);
+		List<User> friends2 = getFriends(user2);
+		
+		List<User> common = new ArrayList<User>(friends1);
+		common.retainAll(friends2);
+		
+		return common;
+	}
 
 	public UserFriendship requestFriendship(String login) {
 		User user = findUserById(ctx.getCallerPrincipal().getName());
@@ -152,6 +190,28 @@ public class UserEJB {
 		
 		return createFriendship(user, friend);
 		
+	}
+	
+	public List <UserFriendship> getFrienshipRequests() {
+		User user = findUserById(ctx.getCallerPrincipal().getName());
+		
+		List<UserFriendship> toRet = new ArrayList<>();
+		toRet = em.createQuery("SELECT uf FROM UserFriendship uf WHERE (user2 = :us OR user1 = :us) AND "
+				+ "accepted = FALSE)", UserFriendship.class)
+				.setParameter("us", user).getResultList();
+		
+		return toRet;
+	}
+	
+	public UserFriendship acceptFriendship(String login) {
+		User user = findUserById(ctx.getCallerPrincipal().getName());
+		User friend = em.find(User.class, login);
+		
+		UserFriendship toRet = em.find(UserFriendship.class, new UserFriendshipId(user.getLogin(), friend.getLogin()));
+		toRet.setAccepted(true);
+		em.persist(toRet);
+		
+		return toRet;
 	}
 	
 }

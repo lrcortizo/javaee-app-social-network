@@ -255,12 +255,5 @@ public class Facade {
 		
 		return toRet;
 	}
-
-	// Exercise 1, Task 2.8
-	// TODO
-	public List<User> getPotentialFriends(User user) {
-		List<User> toRet = new ArrayList<>();
-		return toRet;
-	}
-
+	
 }
