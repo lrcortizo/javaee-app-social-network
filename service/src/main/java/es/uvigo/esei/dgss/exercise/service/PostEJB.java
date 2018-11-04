@@ -59,6 +59,18 @@ public class PostEJB {
 		return toRet;
 	}
 	
+	public List<Post> getFriendsPosts(User user) {
+		Query query = em
+				.createQuery("SELECT p FROM Post p, UserFriendship uf WHERE "
+						+ "(uf.user1 = :us AND p.user = uf.user2) OR "
+						+ "uf.user2 = :us AND p.user = uf.user1)",
+						Post.class)
+				.setParameter("us", user);
+
+		List<Post> posts = (List<Post>) query.getResultList();
+		return posts;
+	}
+	
 	public List<Video> getVideos() {
 		List<Video> toRet = new ArrayList<>();
 		toRet = em.createQuery("SELECT p FROM Post p", Video.class).getResultList();
@@ -95,22 +107,40 @@ public class PostEJB {
 		return toRet;
 	}
 	
-	public Video createVideo(Video video){
+	public Video createVideoREST(Video video){
 		video.setUser(userEJB.findUserById(ctx.getCallerPrincipal().getName()));
 		em.persist(video);
 		statisticsEJB.incrementPostCount();
 		return video;
 	}
 	
-	public Photo createPhoto(Photo photo){
+	public Video createVideo(Video video){
+		em.persist(video);
+		statisticsEJB.incrementPostCount();
+		return video;
+	}
+	
+	public Photo createPhotoREST(Photo photo){
 		photo.setUser(userEJB.findUserById(ctx.getCallerPrincipal().getName()));
 		em.persist(photo);
 		statisticsEJB.incrementPostCount();
 		return photo;
 	}
 	
-	public Link createLink(Link link){
+	public Photo createPhoto(Photo photo){
+		em.persist(photo);
+		statisticsEJB.incrementPostCount();
+		return photo;
+	}
+	
+	public Link createLinkREST(Link link){
 		link.setUser(userEJB.findUserById(ctx.getCallerPrincipal().getName()));
+		em.persist(link);
+		statisticsEJB.incrementPostCount();
+		return link;
+	}
+	
+	public Link createLink(Link link){
 		em.persist(link);
 		statisticsEJB.incrementPostCount();
 		return link;
@@ -175,7 +205,7 @@ public class PostEJB {
 						+ "p in (SELECT c.post FROM Comment c WHERE "
 						+ "(c.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
 						+ "c.user in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)) AND "
-						+ "c.date > :dat)",
+						+ "c.date >= :dat)",
 						Post.class)
 				.setParameter("us", user).setParameter("dat", date);
 		

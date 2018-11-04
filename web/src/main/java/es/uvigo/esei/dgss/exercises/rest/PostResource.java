@@ -40,7 +40,7 @@ public class PostResource {
 	@POST
 	@Path("video")
 	public Response createVideo(Video video) {
-		this.postEJB.createVideo(video);
+		this.postEJB.createVideoREST(video);
 		return 
 				Response.created(
 					uriInfo.getAbsolutePathBuilder()
@@ -51,7 +51,7 @@ public class PostResource {
 	@POST
 	@Path("photo")
 	public Response createPhoto(Photo photo) {
-		this.postEJB.createPhoto(photo);
+		this.postEJB.createPhotoREST(photo);
 		return 
 				Response.created(
 					uriInfo.getAbsolutePathBuilder()
@@ -62,7 +62,7 @@ public class PostResource {
 	@POST
 	@Path("link")
 	public Response createLink(Link link) {
-		this.postEJB.createLink(link);
+		this.postEJB.createLinkREST(link);
 		return 
 				Response.created(
 					uriInfo.getAbsolutePathBuilder()

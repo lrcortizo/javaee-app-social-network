@@ -437,12 +437,13 @@ public class SimpleServlet extends HttpServlet {
 			// Task 2.4.EJB
 			
 			//Creating example users
-			User u = userEJB.createUser(new User(UUID.randomUUID().toString()));
-			User prueba1 = userEJB.createUser(new User(UUID.randomUUID().toString()));
-			User prueba2 = userEJB.createUser(new User(UUID.randomUUID().toString()));
-			User prueba3 = userEJB.createUser(new User(UUID.randomUUID().toString()));
+			User u = new User(UUID.randomUUID().toString());
+			User prueba1 = new User(UUID.randomUUID().toString());
 			userEJB.createFriendship(u, prueba1);
+			User prueba2 = new User(UUID.randomUUID().toString());
 			userEJB.createFriendship(u, prueba2);
+			User prueba3 = new User(UUID.randomUUID().toString());
+			userEJB.createUser(prueba3);
 			
 			//Creating example posts
 			Link post1 = new Link();
@@ -461,12 +462,7 @@ public class SimpleServlet extends HttpServlet {
 			post5.setUser(prueba3);
 			postEJB.createVideo(post5);
 			
-			List<Post> posts = new ArrayList<>();
-			List<User> friends = userEJB.getFriends(u);
-			
-			for(User friend : friends){
-				posts.addAll(postEJB.getPostsOfUser(friend));
-			}
+			List<Post> posts = postEJB.getFriendsPosts(u);
 			
 			writer.println("Friends posts of user " + u.getLogin() + ":<br><br>");
 			for (Post post : posts) {

@@ -166,7 +166,7 @@ public class Facade {
 						+ "p in (SELECT c.post FROM Comment c WHERE "
 						+ "(c.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
 						+ "c.user in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us)) AND "
-						+ "c.date > :dat)",
+						+ "c.date >= :dat)",
 						Post.class)
 				.setParameter("us", user).setParameter("dat", date);
 		
