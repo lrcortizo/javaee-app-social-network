@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Comment {
 	
@@ -19,6 +21,7 @@ public class Comment {
 	private Date date;
 	
 	@ManyToOne
+	@JsonBackReference(value="user-comment")
 	private User user;
 	
 	@ManyToOne

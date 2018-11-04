@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class User {
@@ -22,19 +25,24 @@ public class User {
 
 	private byte[] picture;
 	
-	@OneToMany(mappedBy = "user1", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user1", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value="user1")
 	private Collection<UserFriendship> friends = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "user2", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user2", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value="user2")
 	private Collection<UserFriendship> friendOf = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value="user-post")
 	private List<Post> posts = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value="user-comment")
 	private List<Comment> comments = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@JsonManagedReference(value="user-like")
 	private Collection<Like> likes = new ArrayList<>();
 
 	public User() {

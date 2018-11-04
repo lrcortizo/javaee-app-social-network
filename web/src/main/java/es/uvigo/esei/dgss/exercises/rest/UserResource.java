@@ -14,6 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import es.uvigo.esei.dgss.exercise.service.UserEJB;
 import es.uvigo.esei.dgss.exercises.domain.User;
 
@@ -77,9 +80,7 @@ public class UserResource {
 	@GET
 	@Path("friends")
 	public Response getFriendshipRequests() {
-		this.userEJB.getFrienshipRequests();
-		return
-				Response.ok().build();
+		return Response.ok(this.userEJB.getFrienshipRequests()).build();
 	}
 	
 	@PUT

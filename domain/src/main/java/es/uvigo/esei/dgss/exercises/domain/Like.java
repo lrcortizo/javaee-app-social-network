@@ -6,6 +6,8 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @IdClass(LikeId.class)
 @Table(name="UserLikesPost")
@@ -17,6 +19,7 @@ public class Like {
 
 	@Id
 	@ManyToOne
+	@JsonBackReference(value="user-like")
 	private User user;
 
 	public Like() {

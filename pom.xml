@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.uvigo.esei.dgss</groupId>
@@ -20,21 +21,21 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		
+
 		<!-- BOM versions -->
 		<javaee.api.version>7.0</javaee.api.version>
 		<arquillian.version>1.1.9.Final</arquillian.version>
-		
+
 		<!-- Dependencies versions -->
 		<wildfly.version>8.2.1.Final</wildfly.version>
-		
+
 		<!-- Testing dependecies versions -->
 		<junit.version>4.12</junit.version>
 		<hamcrest.version>2.0.0.0</hamcrest.version>
 		<arquillian.persistence.dbunit.version>1.0.0.Alpha7</arquillian.persistence.dbunit.version>
 		<mysql.connector.java.version>5.1.21</mysql.connector.java.version>
 		<slf4j.version>1.5.10</slf4j.version>
-		
+
 		<!-- Plugins versions -->
 		<wildfly.maven.plugin.version>1.1.0.Alpha1</wildfly.maven.plugin.version>
 		<maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
@@ -56,7 +57,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
+
 			<!-- Testing -->
 			<dependency>
 				<groupId>junit</groupId>
@@ -105,17 +106,17 @@
 			</dependency>
 
 			<!-- Modules -->
-	                <dependency>
+			<dependency>
 				<groupId>es.uvigo.esei.dgss</groupId>
 				<artifactId>domain</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-                        <dependency>
-                                <groupId>es.uvigo.esei.dgss</groupId>
-                                <artifactId>service</artifactId>
-                                <version>${project.version}</version>
-                        </dependency>
-	                <dependency>
+			<dependency>
+				<groupId>es.uvigo.esei.dgss</groupId>
+				<artifactId>service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>es.uvigo.esei.dgss</groupId>
 				<artifactId>web</artifactId>
 				<version>${project.version}</version>

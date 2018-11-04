@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public abstract class Post {
 
@@ -23,6 +25,7 @@ public abstract class Post {
 	private Date date;
 
 	@ManyToOne
+	@JsonBackReference(value="user-post")
 	private User user;
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)

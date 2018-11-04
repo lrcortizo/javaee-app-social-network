@@ -7,15 +7,19 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @IdClass(UserFriendshipId.class)
 public class UserFriendship {
 	@Id
 	@ManyToOne
+	@JsonBackReference(value="user1")
 	private User user1;
 
 	@Id
 	@ManyToOne
+	@JsonBackReference(value="user2")
 	private User user2;
 
 	private Date date;
@@ -55,6 +59,16 @@ public class UserFriendship {
 
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
+	}
+	
+	public UserFriendshipDTO toDTO() {
+		UserFriendshipDTO dto = new UserFriendshipDTO();
+		dto.setDate(this.date);
+		dto.setUser1(this.user1);
+		dto.setUser2(this.user2);
+		dto.setAccepted(this.accepted);
+		
+		return dto;
 	}
 
 }
