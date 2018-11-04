@@ -830,24 +830,23 @@ public class SimpleServlet extends HttpServlet {
 			// Task 2.8.EJB
 			
 			User user = new User(UUID.randomUUID().toString());
-			
-			// Creating friends
 			User prueba1 = new User(UUID.randomUUID().toString());
-			userEJB.createFriendship(user, prueba1);
+			// Creating friends
 			User prueba2 = new User(UUID.randomUUID().toString());
 			userEJB.createFriendship(user, prueba2);
+			userEJB.createFriendship(prueba1, prueba2);
 			User prueba3 = new User(UUID.randomUUID().toString());
-			userEJB.createUser(prueba3);
+			userEJB.createFriendship(user, prueba3);
+			userEJB.createFriendship(prueba1, prueba3);
 			User prueba4 = new User(UUID.randomUUID().toString());
-			userEJB.createUser(prueba4);
+			userEJB.createFriendship(user, prueba4);
+			userEJB.createFriendship(prueba1, prueba4);
 			User prueba5 = new User(UUID.randomUUID().toString());
-			userEJB.createUser(prueba5);
+			userEJB.createFriendship(user, prueba5);
+			userEJB.createFriendship(prueba1, prueba5);
 			User prueba6 = new User(UUID.randomUUID().toString());
-			userEJB.createUser(prueba6);
-			User prueba7 = new User(UUID.randomUUID().toString());
-			userEJB.createUser(prueba7);
-			User prueba8 = new User(UUID.randomUUID().toString());
-			userEJB.createUser(prueba8);
+			userEJB.createFriendship(user, prueba6);
+			userEJB.createFriendship(prueba1, prueba6);
 			
 			List <User> users = userEJB.getPotentialFriends(user);
 			

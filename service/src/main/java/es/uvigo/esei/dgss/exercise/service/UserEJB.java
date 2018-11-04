@@ -155,7 +155,7 @@ public class UserEJB {
 		
 		//Count common friends
 		for (User u : allUsers) {
-			if(!isFriend(user, u)) {
+			if(user != u && !isFriend(user, u)) {
 				if (getCommonFriends(user, u).size() >= 5) {
 					toRet.add(u);
 				}
