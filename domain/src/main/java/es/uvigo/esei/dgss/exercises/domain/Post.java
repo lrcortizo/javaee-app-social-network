@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public abstract class Post {
@@ -28,10 +30,12 @@ public abstract class Post {
 	@JsonBackReference(value="user-post")
 	private User user;
 	
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value="post-comment")
 	private List<Comment> comments = new ArrayList<>();
 	
-	@OneToMany(mappedBy="post")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="post")
+	@JsonManagedReference(value="post-like")
 	private Collection<Like> likes = new ArrayList<>();
 	
 	public Post() {}
@@ -81,4 +85,16 @@ public abstract class Post {
 		comment.setPost(this);
 	}
 	
+	public PostDTO toDTO() {
+		
+		PostDTO dto = new PostDTO();
+		
+		dto.setComments(this.comments);
+		dto.setDate(this.date);
+		dto.setId(this.id);
+		dto.setLikes(this.likes);
+		dto.setUser(this.user);
+		
+		return dto;
+	}
 }

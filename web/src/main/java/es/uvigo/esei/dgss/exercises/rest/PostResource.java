@@ -114,17 +114,13 @@ public class PostResource {
 	@GET
 	@Path("wall")
 	public Response getMyWallPosts() {
-		this.postEJB.getMyWallPosts();
-		return
-				Response.ok().build();
+		return Response.ok(this.postEJB.getMyWallPosts()).build();
 	}
 	
 	@GET
 	@Path("post")
 	public Response getMyPosts() {
-		this.postEJB.getMyPosts();
-		return
-				Response.ok().build();
+		return Response.ok(this.postEJB.getMyPosts()).build();
 	}
 	
 	@POST

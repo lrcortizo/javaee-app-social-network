@@ -25,6 +25,7 @@ public class Comment {
 	private User user;
 	
 	@ManyToOne
+	@JsonBackReference(value="post-comment")
 	private Post post;
 	
 	public Comment(){

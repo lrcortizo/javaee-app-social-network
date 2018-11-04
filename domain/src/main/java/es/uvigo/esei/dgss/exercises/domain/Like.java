@@ -15,6 +15,7 @@ public class Like {
 
 	@Id
 	@ManyToOne
+	@JsonBackReference(value="post-like")
 	private Post post;
 
 	@Id

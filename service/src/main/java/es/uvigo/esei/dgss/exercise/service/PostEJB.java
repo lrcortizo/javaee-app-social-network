@@ -17,6 +17,7 @@ import es.uvigo.esei.dgss.exercises.domain.Like;
 import es.uvigo.esei.dgss.exercises.domain.Link;
 import es.uvigo.esei.dgss.exercises.domain.Photo;
 import es.uvigo.esei.dgss.exercises.domain.Post;
+import es.uvigo.esei.dgss.exercises.domain.PostDTO;
 import es.uvigo.esei.dgss.exercises.domain.User;
 import es.uvigo.esei.dgss.exercises.domain.Video;
 
@@ -224,23 +225,35 @@ public class PostEJB {
 		return toRet;
 	}
 	
-	public List<Post> getMyWallPosts() {
+	public List<PostDTO> getMyWallPosts() {
 		User user = userEJB.findUserById(ctx.getCallerPrincipal().getName());
 		
-		List <Post> toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us OR "
+		List <Post> wall = em.createQuery("SELECT p FROM Post p WHERE p.user = :us OR "
 				+ "(p.user in (SELECT uf.user1 FROM UserFriendship uf WHERE uf.user2 = :us) OR "
 				+ "p.user in (SELECT uf.user2 FROM UserFriendship uf WHERE uf.user1 = :us))", Post.class)
 				.setParameter("us", user).getResultList();
 		
+		List<PostDTO> toRet = new ArrayList<>();
+		
+		for(Post p : wall) {
+			toRet.add(p.toDTO());
+		}
+
 		return toRet;
 	}
 	
-	public List<Post> getMyPosts() {
+	public List<PostDTO> getMyPosts() {
 		User user = userEJB.findUserById(ctx.getCallerPrincipal().getName());
 		
-		List <Post> toRet = em.createQuery("SELECT p FROM Post p WHERE p.user = :us", Post.class)
+		List <Post> posts = em.createQuery("SELECT p FROM Post p WHERE p.user = :us", Post.class)
 				.setParameter("us", user).getResultList();
 		
+		List<PostDTO> toRet = new ArrayList<>();
+		
+		for(Post p : posts) {
+			toRet.add(p.toDTO());
+		}
+
 		return toRet;
 	}
 	
