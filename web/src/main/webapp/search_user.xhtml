@@ -1,49 +1,113 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>JSF Test</title>
-    </h:head>
-    <h:body>
-        <h:form>
-            <h:messages />
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>JSF Test</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:messages />
 
-            <h:panelGrid columns="1">
-                <h:outputLabel value="Search:"/>
-                <h:inputText value="#{userController.filter}" required="true"/>
-                <ui:fragment rendered="#{userController.notEmpty}">
-	                <h:outputLabel value="Result:"/>
-	                <table>
-	                <thead>
-	                	<tr>
-	                		<th>Login</th>
-	                		<th>Name</th>
-	                		<th>Role</th>
-	                	</tr>
-	                </thead>
-	                	<ui:repeat value="#{userController.matching}" var="user">
-	                		<tr>
-	                			<td><h:outputLabel value="#{user.login}"/></td>
-	                			<td><h:outputLabel value="#{user.name}"/></td>
-	                			<td><h:outputLabel value="#{user.role}"/></td>
-	                		</tr>
-	                	</ui:repeat>
-	                </table>
-	        	</ui:fragment>
-            </h:panelGrid>
+		<h:panelGrid columns="1">
+			<h:outputLabel value="Search:" />
+			<h:inputText value="#{userController.filter}" required="true" />
+			<ui:fragment rendered="#{userController.isNotEmpty()}">
+				<h:outputLabel value="Result:" />
+				<table>
+					<thead>
+						<tr>
+							<th>Login</th>
+							<th>Name</th>
+							<th>Role</th>
+						</tr>
+					</thead>
+					<ui:repeat value="#{userController.matching}" var="user">
+						<tr>
+							<td><h:outputLabel value="#{user.login}" /></td>
+							<td><h:outputLabel value="#{user.name}" /></td>
+							<td><h:outputLabel value="#{user.role}" /></td>
+							<td><h:commandButton value="Info"
+									action="#{userController.showInfo(user.login)}" /></td>
+						</tr>
+					</ui:repeat>
+				</table>
+			</ui:fragment>
+		</h:panelGrid>
 
-            <h:commandButton value="Search" action="#{userController.searchUsers()}"/>
+		<h:commandButton value="Search"
+			action="#{userController.searchUsers()}" />
 
-            <ul>
-                <li> Date:
-                    <h:outputText value="#{userController.date}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputText>
-                </li>
-            </ul>
-        </h:form>
-    </h:body>
+		<h:panelGrid columns="1">
+			<ui:fragment rendered="#{userController.userIsNotEmpty()}">
+				<h:outputLabel value="Info:" />
+				<table>
+					<thead>
+						<tr>
+							<th>Login</th>
+							<th>Password</th>
+							<th>Name</th>
+							<th>Role</th>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><h:outputLabel
+									value="#{userController.selectedUser.login}" /></td>
+							<td><h:outputLabel
+									value="#{userController.selectedUser.password}" /></td>
+							<td><h:outputLabel
+									value="#{userController.selectedUser.name}" /></td>
+							<td><h:outputLabel
+									value="#{userController.selectedUser.role}" /></td>
+							<td><h:outputLabel
+									value="#{userController.selectedUser.email}" /></td>
+						</tr>
+					</tbody>
+				</table>
+				<h:outputLabel value="Posts:" />
+				<table>
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Date</th>
+							<th>User</th>
+							<th>Duration</th>
+							<th>URL</th>
+							<th>Content</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ui:repeat value="#{userController.posts}" var="post">
+							<tr>
+								<td><h:outputLabel
+										value="#{post.id}" /></td>
+								<td><h:outputLabel
+										value="#{post.date}" /></td>
+								<td><h:outputLabel
+										value="#{post.user}" /></td>
+								<td><h:outputLabel
+										value="#{post.duration}" /></td>
+								<td><h:outputLabel
+										value="#{post.url}" /></td>
+								<td><h:outputLabel
+										value="#{post.content}" /></td>
+							</tr>
+						</ui:repeat>
+					</tbody>
+				</table>
+			</ui:fragment>
+		</h:panelGrid>
+
+		<ul>
+			<li>Date: <h:outputText value="#{userController.date}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</li>
+		</ul>
+	</h:form>
+</h:body>
 </html>

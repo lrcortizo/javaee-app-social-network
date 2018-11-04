@@ -50,6 +50,11 @@ public class UserEJB {
 		return toRet;
 	}
 	
+	public User findUserByIdNoAuth(String login) {
+		User toRet = em.find(User.class, login);
+		return toRet;
+	}
+	
 	public List<User> getUsers(){
 		List<User> toRet = new ArrayList<>();
 		toRet = em.createQuery("SELECT u FROM User u", User.class).getResultList();
