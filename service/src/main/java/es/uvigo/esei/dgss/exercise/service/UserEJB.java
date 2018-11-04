@@ -120,8 +120,7 @@ public class UserEJB {
 	
 	public Like addLike(Like like){
 		User user = like.getUser();
-		user.addLike(like);
-		em.persist(user);
+		em.persist(like);
 		
 		String subject = "Like";
 		String body = user.getName() + " likes your post ";

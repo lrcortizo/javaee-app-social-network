@@ -664,7 +664,8 @@ public class SimpleServlet extends HttpServlet {
 			
 			//Given user and post
 			User user = new User(UUID.randomUUID().toString());
-			Post post = new Video();
+			Video post = new Video();
+			postEJB.createVideo(post);
 			
 			// Creating friends
 			User prueba1 = new User(UUID.randomUUID().toString());
