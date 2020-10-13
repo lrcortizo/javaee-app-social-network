@@ -30,7 +30,7 @@
 		<wildfly.version>8.2.1.Final</wildfly.version>
 
 		<!-- Testing dependecies versions -->
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<hamcrest.version>2.0.0.0</hamcrest.version>
 		<arquillian.persistence.dbunit.version>1.0.0.Alpha7</arquillian.persistence.dbunit.version>
 		<mysql.connector.java.version>5.1.21</mysql.connector.java.version>
