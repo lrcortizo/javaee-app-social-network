@@ -27,7 +27,7 @@
 		<arquillian.version>1.1.9.Final</arquillian.version>
 
 		<!-- Dependencies versions -->
-		<wildfly.version>8.2.1.Final</wildfly.version>
+		<wildfly.version>21.0.1.Final</wildfly.version>
 
 		<!-- Testing dependecies versions -->
 		<junit.version>4.12</junit.version>
